@@ -1,0 +1,201 @@
+#!/bin/sh
+# ret = return
+# retstring = returned string from function
+# expval = expected value
+# retval = returned value
+
+# TESTS WITH STRING ECHO WHEN RET 0 (retstring \n expval~retval):
+
+ltr_substr0 0 '*' "*DASTRING" 4 && echo ; echo 0~$?
+ltr_substr0 0 '*' "**DASTRING" 4 && echo ; echo 0~$?
+ltr_substr0 1 '*' "*DASTRING" 4 && echo ; echo 0~$?
+ltr_substr0 1 '*' "**DASTRING*" 4 && echo ; echo 0~$?
+ltr_substr0 1 '*' "DASTRING**" 4 && echo ; echo 0~$?
+ltr_substr0 2 '*' "**DASTRING" 4 && echo ; echo 0~$?
+ltr_substr0 2 '*' "***DASTRING*" 4 && echo ; echo 0~$?
+ltr_substr0 2 '*' "DASTRING***" 4 && echo ; echo 0~$?
+ltr_substr0 0 '*' "DASTRING*" 4 ; echo 1~$?
+ltr_substr0 0 '*' "*DASTRING*" 4 ; echo 1~$?
+ltr_substr0 0 '*' "*DASTRING**" 4 ; echo 1~$?
+ltr_substr0 0 '*' "**DASTRING*" 4 ; echo 1~$?
+ltr_substr0 1 '*' "DASTRING*" 4 ; echo 1~$?
+ltr_substr0 2 '*' "DASTRING**" 4 ; echo 1~$?
+ltr_substr0 2 '*' "*DASTRING*" 4 ; echo 1~$?
+ltr_substr0 0 '*' "DASTRING" 4 ; echo 2~$?
+ltr_substr0 1 '*' "DASTRING" 4 ; echo 2~$?
+ltr_substr0 2 '*' "DASTRING" 4 ; echo 2~$?
+ltr_substr0 2 '*' "*DASTRING" 4 ; echo 3~$?
+ltr_substr0 2 '*' "DASTRING*" 4 ; echo 3~$?
+ltr_substr0 3 '*' "**DASTRING" 4 ; echo 3~$?
+ltr_substr0 3 '*' "DASTRING**" 4 ; echo 3~$?
+echo ~~~LTR0END
+
+ltl_substr0 0 '*' "DASTRING*" 4 && echo ; echo 0~$?
+ltl_substr0 0 '*' "DASTRING**" 4 && echo ; echo 0~$?
+ltl_substr0 1 '*' "DASTRING*" 4 && echo ; echo 0~$?
+ltl_substr0 2 '*' "DASTRING**" 4 && echo ; echo 0~$?
+ltl_substr0 2 '*' "*DASTRING***" 4 && echo ; echo 0~$?
+ltl_substr0 2 '*' "***DASTRING" 4 && echo ; echo 0~$?
+ltl_substr0 0 '*' "*DASTRING*" 4 && echo ; echo 0~$?
+ltl_substr0 0 '*' "**DASTRING*" 4 && echo ; echo 0~$?
+ltl_substr0 0 '*' "*DASTRING**" 4 && echo ; echo 0~$?
+ltl_substr0 2 '*' "**DASTRING" 4 && echo ; echo 0~$?
+ltl_substr0 2 '*' "*DASTRING*" 4 && echo ; echo 0~$?
+ltl_substr0 0 '*' "*DASTRING" 4 ; echo 1~$?
+ltl_substr0 1 '*' "*DASTRING" 4 ; echo 1~$?
+ltl_substr0 1 '*' "*DASTRING**" 4 ; echo 1~$?
+ltl_substr0 1 '*' "**DASTRING" 4 ; echo 1~$?
+ltl_substr0 0 '*' "DASTRING" 4 ; echo 2~$?
+ltl_substr0 1 '*' "DASTRING" 4 ; echo 2~$?
+ltl_substr0 2 '*' "DASTRING" 4 ; echo 2~$?
+ltl_substr0 2 '*' "*DASTRING" 4 ; echo 3~$?
+ltl_substr0 2 '*' "DASTRING*" 4 ; echo 3~$?
+ltl_substr0 3 '*' "**DASTRING" 4 ; echo 3~$?
+ltl_substr0 3 '*' "DASTRING**" 4 ; echo 3~$?
+echo ~~~LTL0END
+
+ltr_substr1 0 '*' 0 '!' "*DASTRING!" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 0 '!' "*DASTRING!!" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 0 '!' "*!DASTRING!" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 0 '!' "*!DASTRING!!" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 0 '!' "*!!DASTRING!" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 1 '!' "*DASTRING!" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 2 '!' "*DASTRING!!" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 2 '!' "*!DASTRING!" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 2 '!' "*!DASTRING!!!" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 2 '!' "*!!DASTRING" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 2 '!' "*!!!DASTRING" 6 && echo ; echo 0~$?
+ltr_substr1 0 '*' 0 '!' "*!DASTRING" 6 ; echo 4~$?
+ltr_substr1 0 '*' 1 '!' "*!DASTRING" 6 ; echo 4~$?
+ltr_substr1 0 '*' 1 '!' "*!DASTRING!!" 6 ; echo 4~$?
+ltr_substr1 0 '*' 1 '!' "*!!DASTRING" 6 ; echo 4~$?
+ltr_substr1 0 '*' 0 '!' "*DASTRING" 6 ; echo 5~$?
+ltr_substr1 0 '*' 1 '!' "*DASTRING" 6 ; echo 5~$?
+ltr_substr1 0 '*' 2 '!' "*DASTRING" 6 ; echo 5~$?
+ltr_substr1 0 '*' 2 '!' "*DASTRING!" 6 ; echo 6~$?
+ltr_substr1 0 '*' 2 '!' "*!DASTRING" 6 ; echo 6~$?
+ltr_substr1 0 '*' 3 '!' "*DASTRING!!" 6 ; echo 6~$?
+ltr_substr1 0 '*' 3 '!' "*!!DASTRING" 6 ; echo 6~$?
+echo ~~~LTR1END
+
+ltl_substr1 0 '*' 0 '!' "!DASTRING*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 0 '!' "!!DASTRING*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 0 '!' "!DASTRING!*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 0 '!' "!!DASTRING!*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 0 '!' "!DASTRING!!*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 1 '!' "!DASTRING*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 2 '!' "!!DASTRING*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 2 '!' "!DASTRING!*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 2 '!' "!!!DASTRING!*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 2 '!' "DASTRING!!*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 2 '!' "DASTRING!!!*" 6 && echo ; echo 0~$?
+ltl_substr1 0 '*' 0 '!' "DASTRING!*" 6 ; echo 4~$?
+ltl_substr1 0 '*' 1 '!' "DASTRING!*" 6 ; echo 4~$?
+ltl_substr1 0 '*' 1 '!' "!!DASTRING!*" 6 ; echo 4~$?
+ltl_substr1 0 '*' 1 '!' "DASTRING!!*" 6 ; echo 4~$?
+ltl_substr1 0 '*' 0 '!' "DASTRING*" 6 ; echo 5~$?
+ltl_substr1 0 '*' 1 '!' "DASTRING*" 6 ; echo 5~$?
+ltl_substr1 0 '*' 2 '!' "DASTRING*" 6 ; echo 5~$?
+ltl_substr1 0 '*' 2 '!' "!DASTRING*" 6 ; echo 6~$?
+ltl_substr1 0 '*' 2 '!' "DASTRING!*" 6 ; echo 6~$?
+ltl_substr1 0 '*' 3 '!' "!!DASTRING*" 6 ; echo 6~$?
+ltl_substr1 0 '*' 3 '!' "DASTRING!!*" 6 ; echo 6~$?
+echo ~~~LTL1END
+
+# TESTS WITHOUT STRING ECHO WHEN RET 0 (expval~retval):
+
+ltr_substr0 0 '*' "*DASTRING" 4 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr0 0 '*' "**DASTRING" 4 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr0 1 '*' "*DASTRING" 4 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr0 1 '*' "**DASTRING*" 4 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr0 1 '*' "DASTRING**" 4 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr0 2 '*' "**DASTRING" 4 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr0 2 '*' "***DASTRING*" 4 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr0 2 '*' "DASTRING***" 4 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr0 0 '*' "DASTRING*" 4 ; echo 1~$?
+ltr_substr0 0 '*' "*DASTRING*" 4 ; echo 1~$?
+ltr_substr0 0 '*' "*DASTRING**" 4 ; echo 1~$?
+ltr_substr0 0 '*' "**DASTRING*" 4 ; echo 1~$?
+ltr_substr0 1 '*' "DASTRING*" 4 ; echo 1~$?
+ltr_substr0 2 '*' "DASTRING**" 4 ; echo 1~$?
+ltr_substr0 2 '*' "*DASTRING*" 4 ; echo 1~$?
+ltr_substr0 0 '*' "DASTRING" 4 ; echo 2~$?
+ltr_substr0 1 '*' "DASTRING" 4 ; echo 2~$?
+ltr_substr0 2 '*' "DASTRING" 4 ; echo 2~$?
+ltr_substr0 2 '*' "*DASTRING" 4 ; echo 3~$?
+ltr_substr0 2 '*' "DASTRING*" 4 ; echo 3~$?
+ltr_substr0 3 '*' "**DASTRING" 4 ; echo 3~$?
+ltr_substr0 3 '*' "DASTRING**" 4 ; echo 3~$?
+echo ~~~LTR0END
+
+ltl_substr0 0 '*' "DASTRING*" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 0 '*' "DASTRING**" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 1 '*' "DASTRING*" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 2 '*' "DASTRING**" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 2 '*' "*DASTRING***" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 2 '*' "***DASTRING" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 0 '*' "*DASTRING*" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 0 '*' "**DASTRING*" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 0 '*' "*DASTRING**" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 2 '*' "**DASTRING" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 2 '*' "*DASTRING*" 4 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr0 0 '*' "*DASTRING" 4 ; echo 1~$?
+ltl_substr0 1 '*' "*DASTRING" 4 ; echo 1~$?
+ltl_substr0 1 '*' "*DASTRING**" 4 ; echo 1~$?
+ltl_substr0 1 '*' "**DASTRING" 4 ; echo 1~$?
+ltl_substr0 0 '*' "DASTRING" 4 ; echo 2~$?
+ltl_substr0 1 '*' "DASTRING" 4 ; echo 2~$?
+ltl_substr0 2 '*' "DASTRING" 4 ; echo 2~$?
+ltl_substr0 2 '*' "*DASTRING" 4 ; echo 3~$?
+ltl_substr0 2 '*' "DASTRING*" 4 ; echo 3~$?
+ltl_substr0 3 '*' "**DASTRING" 4 ; echo 3~$?
+ltl_substr0 3 '*' "DASTRING**" 4 ; echo 3~$?
+echo ~~~LTL0END
+
+ltr_substr1 0 '*' 0 '!' "*DASTRING!" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 0 '!' "*DASTRING!!" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 0 '!' "*!DASTRING!" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 0 '!' "*!DASTRING!!" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 0 '!' "*!!DASTRING!" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 1 '!' "*DASTRING!" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 2 '!' "*DASTRING!!" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 2 '!' "*!DASTRING!" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 2 '!' "*!DASTRING!!!" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 2 '!' "*!!DASTRING" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 2 '!' "*!!!DASTRING" 6 > /dev/null 2>&1 ; echo 0~$?
+ltr_substr1 0 '*' 0 '!' "*!DASTRING" 6 ; echo 4~$?
+ltr_substr1 0 '*' 1 '!' "*!DASTRING" 6 ; echo 4~$?
+ltr_substr1 0 '*' 1 '!' "*!DASTRING!!" 6 ; echo 4~$?
+ltr_substr1 0 '*' 1 '!' "*!!DASTRING" 6 ; echo 4~$?
+ltr_substr1 0 '*' 0 '!' "*DASTRING" 6 ; echo 5~$?
+ltr_substr1 0 '*' 1 '!' "*DASTRING" 6 ; echo 5~$?
+ltr_substr1 0 '*' 2 '!' "*DASTRING" 6 ; echo 5~$?
+ltr_substr1 0 '*' 2 '!' "*DASTRING!" 6 ; echo 6~$?
+ltr_substr1 0 '*' 2 '!' "*!DASTRING" 6 ; echo 6~$?
+ltr_substr1 0 '*' 3 '!' "*DASTRING!!" 6 ; echo 6~$?
+ltr_substr1 0 '*' 3 '!' "*!!DASTRING" 6 ; echo 6~$?
+echo ~~~LTR1END
+
+ltl_substr1 0 '*' 0 '!' "!DASTRING*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 0 '!' "!!DASTRING*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 0 '!' "!DASTRING!*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 0 '!' "!!DASTRING!*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 0 '!' "!DASTRING!!*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 1 '!' "!DASTRING*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 2 '!' "!!DASTRING*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 2 '!' "!DASTRING!*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 2 '!' "!!!DASTRING!*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 2 '!' "DASTRING!!*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 2 '!' "DASTRING!!!*" 6 > /dev/null 2>&1 ; echo 0~$?
+ltl_substr1 0 '*' 0 '!' "DASTRING!*" 6 ; echo 4~$?
+ltl_substr1 0 '*' 1 '!' "DASTRING!*" 6 ; echo 4~$?
+ltl_substr1 0 '*' 1 '!' "!!DASTRING!*" 6 ; echo 4~$?
+ltl_substr1 0 '*' 1 '!' "DASTRING!!*" 6 ; echo 4~$?
+ltl_substr1 0 '*' 0 '!' "DASTRING*" 6 ; echo 5~$?
+ltl_substr1 0 '*' 1 '!' "DASTRING*" 6 ; echo 5~$?
+ltl_substr1 0 '*' 2 '!' "DASTRING*" 6 ; echo 5~$?
+ltl_substr1 0 '*' 2 '!' "!DASTRING*" 6 ; echo 6~$?
+ltl_substr1 0 '*' 2 '!' "DASTRING!*" 6 ; echo 6~$?
+ltl_substr1 0 '*' 3 '!' "!!DASTRING*" 6 ; echo 6~$?
+ltl_substr1 0 '*' 3 '!' "DASTRING!!*" 6 ; echo 6~$?
+echo ~~~LTL1END
