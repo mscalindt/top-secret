@@ -1,0 +1,65 @@
+# UP (left) - the way it should be
+# DOWN (right) - the way it is
+#
+# Both should display same string
+#
+# Successful iterations are numbered, so if the natural sort order is broken,
+# this means that something is wrong
+#
+# Also, after the opening quote and /, you will see either S or D, then wspace
+# S - single quotes
+# D - double quotes
+#
+# The fourth successful iteration will repeat itself to test both S and D,
+# first repeat starting with S and second repeat with D.
+#
+# Last two successful iterations will test order with 3 strings each,
+# first iteration should be S D S
+# second iteration should be D S D
+#
+# Last seven iterations are intentional errors
+# (NOTE: not correct on ksh, the last fifth and sixth iterations are not
+#  errors[1])
+#
+# TESTED AND CORRECT ON THE FOLLOWING SHELLS:
+# dash bash zsh mksh yash
+#
+# ISSUES ON THE FOLLOWING SHELLS (POSIX STANDARD ISSUES; NOT ACTUAL ISSUES):
+# 1. ksh ('"' always gets stripped in eval expansion unless explicitly escaped;
+#         this makes the last fifth and sixth iterations valid for ksh (only))
+#
+
+BEGIN
+BACKUP
+'/S $HOME/1' "/D \$HOME/1"
+ '/S $HOME/2'  "/D \$HOME/2" 
+'/S $HOME/3' BAD STR   IN MIDDLE  lol "/D \$HOME/3"
+'2/S $HOME/4' 4' "/D \$HOME/4' 4"
+"2/D \$HOME/4\" 4" '/S $HOME/4" 4'
+'/S   $HOME/5   ' "/D   \$HOME/5   "
+'/S $HOME/6|' "/D \$HOME/6|"
+'/S $HOME/7&' "/D \$HOME/7&"
+'/S $HOME/8;' "/D \$HOME/8;"
+'/S $HOME/9<' "/D \$HOME/9<"
+'/S $HOME/10>' "/D \$HOME/10>"
+'/S $HOME/11(' "/D \$HOME/11("
+'/S $HOME/12)' "/D \$HOME/12)"
+'/S $HOME/13$' "/D \$HOME/13\$"
+'/S $HOME/14`' "/D \$HOME/14\`"
+'/S $HOME/15\\' "/D \$HOME/15\\\\"
+'/S $HOME/16"' "/D \$HOME/16\""
+'/S $HOME/17'' "/D \$HOME/17'"
+'/S $HOME/18*' "/D \$HOME/18*"
+'/S $HOME/19?' "/D \$HOME/19?"
+'/S $HOME/20[' "/D \$HOME/20["
+'/S $HOME/21#' "/D \$HOME/21#"
+'/S $HOME/22~' "/D \$HOME/22~"
+'/S $HOME/23=' "/D \$HOME/23="
+'/S $HOME/24%' "/D \$HOME/24%"
+'/S $HOME/25' "/D \$HOME/25" '/S $HOME/25'
+"/D \$HOME/26" '/S $HOME/26' "/D \$HOME/26"
+''''' "\"\"\""
+'2'  '' "2\"  \""
+"/\$HOME/"A" "2/\$HOME/\"A" "
+""""""
+END
