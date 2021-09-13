@@ -1,0 +1,67 @@
+# UP (left) - the way it should be
+# DOWN (right) - the way it is
+#
+# Both should display same string
+#
+# Successful iterations are numbered, so if the natural sort order is broken,
+# this means that something is wrong
+#
+# Also, after the opening quote, you will see either S or D, then whitespace
+# S - single quotes
+# D - double quotes
+#
+# The fourth successful iteration will repeat itself to test both S and D,
+# first repeat starting with S and second repeat with D.
+#
+# Last two successful iterations will test order with 3 strings each,
+# first iteration should be S D S
+# second iteration should be D S D
+#
+# Last three iterations are intentional errors
+# (NOTE: not correct on ksh, the first and second of total three last
+#  iterations are not errors[1])
+#
+# TESTED AND CORRECT ON THE FOLLOWING SHELLS:
+# dash bash zsh mksh yash
+#
+# ISSUES ON THE FOLLOWING SHELLS (POSIX STANDARD ISSUES; NOT ACTUAL ISSUES):
+# 1. ksh ('"' always gets stripped in eval expansion unless explicitly escaped;
+#         this makes the first and second of total three last iterations valid
+#         for ksh (only))
+#
+
+BEGIN
+OPERATIONS
+'S chmod a+x 1' "D chmod a+x 1"
+ 'S chmod a+x 2'  "D chmod a+x 2" 
+'S chmod a+x 3' BAD STR   IN MIDDLE  lol "D chmod a+x 3"
+2'S chmod a+x "4' 4"' "D chmod a+x \"4' 4\""
+2"D chmod a+x \"4\" 4\"" 'S chmod a+x "4" 4"'
+'S   chmod a+x 1   ' "D   chmod a+x 1   "
+'S chmod a+x 6|' "D chmod a+x 6|"
+'S chmod a+x 7&' "D chmod a+x 7&"
+'S chmod a+x 8;' "D chmod a+x 8;"
+'S chmod a+x 9<' "D chmod a+x 9<"
+'S chmod a+x 10>' "D chmod a+x 10>"
+'S chmod a+x 11(' "D chmod a+x 11("
+'S chmod a+x 12)' "D chmod a+x 12)"
+'S chmod a+x 13$' "D chmod a+x 13\$"
+'S chmod a+x 14`' "D chmod a+x 14\`"
+'S chmod a+x 15\\' "D chmod a+x 15\\\\"
+'S chmod a+x 16"' "D chmod a+x 16\""
+'S chmod a+x 17'' "D chmod a+x 17'"
+'S chmod a+x 18*' "D chmod a+x 18*"
+'S chmod a+x 19?' "D chmod a+x 19?"
+'S chmod a+x 20[' "D chmod a+x 20["
+'S chmod a+x 21#' "D chmod a+x 21#"
+'S chmod a+x 22~' "D chmod a+x 22~"
+'S chmod a+x 23=' "D chmod a+x 23="
+'S chmod a+x 24%' "D chmod a+x 24%"
+'''''
+"\"\"\""
+2''  ''
+2"\"  \""
+"chmod a+x "A"
+2"chmod a+x \"A" "
+""""""
+END
