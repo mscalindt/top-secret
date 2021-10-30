@@ -1,0 +1,3615 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+
+num=001
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=002
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr0 0 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=003
+IFS= read -r cmd <<'EOF'
+ltr_substr0 1 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr0 1 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=004
+IFS= read -r cmd <<'EOF'
+ltr_substr0 1 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*DASTRING|&;<>()$`\"'?[]#~=%*
+EOF
+retstr=$(ltr_substr0 1 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=005
+IFS= read -r cmd <<'EOF'
+ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*
+EOF
+retstr=$(ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=006
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr0 2 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=007
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "***DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*DASTRING|&;<>()$`\"'?[]#~=%*
+EOF
+retstr=$(ltr_substr0 2 '*' "***DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=008
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%***" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*
+EOF
+retstr=$(ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%***" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=009
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 0 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=010
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=011
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=012
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 0 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=013
+IFS= read -r cmd <<'EOF'
+ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=014
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=015
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 2 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=016
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 0 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=2
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=017
+IFS= read -r cmd <<'EOF'
+ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=2
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=018
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=2
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=019
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 2 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=3
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=020
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=3
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=021
+IFS= read -r cmd <<'EOF'
+ltr_substr0 3 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 3 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=3
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=022
+IFS= read -r cmd <<'EOF'
+ltr_substr0 3 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 3 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4)
+retval=$?
+expval=3
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=101
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=102
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING*
+EOF
+retstr=$(ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=103
+IFS= read -r cmd <<'EOF'
+ltl_substr0 1 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 1 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=104
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING*
+EOF
+retstr=$(ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=105
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING***" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING***" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=106
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "***|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*
+EOF
+retstr=$(ltl_substr0 2 '*' "***|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=107
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=108
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING*"
+EOF
+IFS= read -r expstr <<'EOF'
+**|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 0 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING*")
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=109
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*|&;<>()$`\"'?[]#~=%DASTRING*
+EOF
+retstr=$(ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=110
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*
+EOF
+retstr=$(ltl_substr0 2 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=111
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=112
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=113
+IFS= read -r cmd <<'EOF'
+ltl_substr0 1 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 1 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=114
+IFS= read -r cmd <<'EOF'
+ltl_substr0 1 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 1 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=115
+IFS= read -r cmd <<'EOF'
+ltl_substr0 1 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 1 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=1
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=116
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=2
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=117
+IFS= read -r cmd <<'EOF'
+ltl_substr0 1 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 1 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=2
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=118
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=2
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=119
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=3
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=120
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4)
+retval=$?
+expval=3
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=121
+IFS= read -r cmd <<'EOF'
+ltl_substr0 3 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 3 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=3
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=122
+IFS= read -r cmd <<'EOF'
+ltl_substr0 3 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 3 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4)
+retval=$?
+expval=3
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=201
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=202
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%!
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=203
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=204
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!DASTRING|&;<>()$`\"'?[]#~=%!
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=205
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!!DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=206
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 1 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 1 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=207
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%!
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=208
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=209
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!!" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=210
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=211
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*!!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*!!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=212
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=4
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=213
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 1 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 1 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=4
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=214
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 1 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 1 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6)
+retval=$?
+expval=4
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=215
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 1 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 1 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=4
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=216
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=5
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=217
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 1 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 1 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=5
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=218
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=5
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=219
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=6
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=220
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=6
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=221
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 3 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 3 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6)
+retval=$?
+expval=6
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=222
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 3 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 3 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=6
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=301
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=302
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=303
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING!
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=304
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!|&;<>()$`\"'?[]#~=%DASTRING!
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=305
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING!!
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=306
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 1 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr1 0 '*' 1 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=307
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=308
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING!
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=309
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "!!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING!
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "!!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=310
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=311
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!!*" 6)
+retval=$?
+expval=0
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=312
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=4
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=313
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=4
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=314
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 1 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 1 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=4
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=315
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6)
+retval=$?
+expval=4
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=316
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=5
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=317
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=5
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=318
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=5
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=319
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=6
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=320
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=6
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=321
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 3 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 3 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=6
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
+
+num=322
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 3 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 3 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6)
+retval=$?
+expval=6
+if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+    printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+elif [ $retval -ne $expval ]; then
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%s)\n" "$retstr"
+    printf "expstr: (%s)\n" "$expstr"
+    printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+    printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+    echo
+else
+    echo
+    printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+    printf "cmd: (%s)\n" "$cmd"
+    printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+    printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+    printf "retval: (%d)\n" "$retval"
+    printf "expval: (%d)\n" "$expval"
+    echo
+fi
