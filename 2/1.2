@@ -1,0 +1,1096 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+
+evaluate() {
+    if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+        printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+    elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    elif [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%s)\n" "$retstr"
+        printf "expstr: (%s)\n" "$expstr"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    else
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%d)\n" "$retval"
+        printf "expval: (%d)\n" "$expval"
+        echo
+    fi
+}
+
+num=001
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=002
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr0 0 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=003
+IFS= read -r cmd <<'EOF'
+ltr_substr0 1 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr0 1 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=004
+IFS= read -r cmd <<'EOF'
+ltr_substr0 1 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*DASTRING|&;<>()$`\"'?[]#~=%*
+EOF
+retstr=$(ltr_substr0 1 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=005
+IFS= read -r cmd <<'EOF'
+ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*
+EOF
+retstr=$(ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=006
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr0 2 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=007
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "***DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*DASTRING|&;<>()$`\"'?[]#~=%*
+EOF
+retstr=$(ltr_substr0 2 '*' "***DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=008
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%***" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*
+EOF
+retstr=$(ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%***" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=009
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 0 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=010
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=011
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 0 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=012
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 0 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=013
+IFS= read -r cmd <<'EOF'
+ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=014
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=015
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 2 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=016
+IFS= read -r cmd <<'EOF'
+ltr_substr0 0 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 0 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=2
+evaluate;
+
+num=017
+IFS= read -r cmd <<'EOF'
+ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 1 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=2
+evaluate;
+
+num=018
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=2
+evaluate;
+
+num=019
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 2 '*' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=3
+evaluate;
+
+num=020
+IFS= read -r cmd <<'EOF'
+ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 2 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%*" 4)
+retval=$?
+expval=3
+evaluate;
+
+num=021
+IFS= read -r cmd <<'EOF'
+ltr_substr0 3 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 3 '*' "**DASTRING|&;<>()\$\`\\\"'?[]#~=%" 4)
+retval=$?
+expval=3
+evaluate;
+
+num=022
+IFS= read -r cmd <<'EOF'
+ltr_substr0 3 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr0 3 '*' "DASTRING|&;<>()\$\`\\\"'?[]#~=%**" 4)
+retval=$?
+expval=3
+evaluate;
+
+num=101
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=102
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING*
+EOF
+retstr=$(ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=103
+IFS= read -r cmd <<'EOF'
+ltl_substr0 1 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 1 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=104
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING*
+EOF
+retstr=$(ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=105
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING***" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING***" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=106
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "***|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*
+EOF
+retstr=$(ltl_substr0 2 '*' "***|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=107
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=108
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING*"
+EOF
+IFS= read -r expstr <<'EOF'
+**|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 0 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING*")
+retval=$?
+expval=0
+evaluate;
+
+num=109
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*|&;<>()$`\"'?[]#~=%DASTRING*
+EOF
+retstr=$(ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=110
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*
+EOF
+retstr=$(ltl_substr0 2 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=111
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+*|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4)
+retval=$?
+expval=0
+evaluate;
+
+num=112
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 0 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=113
+IFS= read -r cmd <<'EOF'
+ltl_substr0 1 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 1 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=114
+IFS= read -r cmd <<'EOF'
+ltl_substr0 1 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 1 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=115
+IFS= read -r cmd <<'EOF'
+ltl_substr0 1 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 1 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=1
+evaluate;
+
+num=116
+IFS= read -r cmd <<'EOF'
+ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 0 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=2
+evaluate;
+
+num=117
+IFS= read -r cmd <<'EOF'
+ltl_substr0 1 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 1 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=2
+evaluate;
+
+num=118
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=2
+evaluate;
+
+num=119
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 2 '*' "*|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=3
+evaluate;
+
+num=120
+IFS= read -r cmd <<'EOF'
+ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 2 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 4)
+retval=$?
+expval=3
+evaluate;
+
+num=121
+IFS= read -r cmd <<'EOF'
+ltl_substr0 3 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 3 '*' "**|&;<>()\$\`\\\"'?[]#~=%DASTRING" 4)
+retval=$?
+expval=3
+evaluate;
+
+num=122
+IFS= read -r cmd <<'EOF'
+ltl_substr0 3 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr0 3 '*' "|&;<>()\$\`\\\"'?[]#~=%DASTRING**" 4)
+retval=$?
+expval=3
+evaluate;
+
+num=201
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=202
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%!
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=203
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=204
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!DASTRING|&;<>()$`\"'?[]#~=%!
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=205
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!!DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=206
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 1 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 1 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=207
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+DASTRING|&;<>()$`\"'?[]#~=%!
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=208
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=209
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!DASTRING|&;<>()$`\"'?[]#~=%
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!!" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=210
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=211
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*!!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*!!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=212
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=4
+evaluate;
+
+num=213
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 1 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 1 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=4
+evaluate;
+
+num=214
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 1 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 1 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6)
+retval=$?
+expval=4
+evaluate;
+
+num=215
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 1 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 1 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=4
+evaluate;
+
+num=216
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 0 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=5
+evaluate;
+
+num=217
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 1 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 1 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=5
+evaluate;
+
+num=218
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=5
+evaluate;
+
+num=219
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!" 6)
+retval=$?
+expval=6
+evaluate;
+
+num=220
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 2 '!' "*!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=6
+evaluate;
+
+num=221
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 3 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 3 '!' "*DASTRING|&;<>()\$\`\\\"'?[]#~=%!!" 6)
+retval=$?
+expval=6
+evaluate;
+
+num=222
+IFS= read -r cmd <<'EOF'
+ltr_substr1 0 '*' 3 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltr_substr1 0 '*' 3 '!' "*!!DASTRING|&;<>()\$\`\\\"'?[]#~=%" 6)
+retval=$?
+expval=6
+evaluate;
+
+num=301
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=302
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=303
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING!
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=304
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!|&;<>()$`\"'?[]#~=%DASTRING!
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=305
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING!!
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=306
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 1 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr1 0 '*' 1 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=307
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!|&;<>()$`\"'?[]#~=%DASTRING
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=308
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING!
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=309
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "!!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'?[]#~=%DASTRING!
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "!!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=310
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=311
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+!
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!!*" 6)
+retval=$?
+expval=0
+evaluate;
+
+num=312
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=4
+evaluate;
+
+num=313
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=4
+evaluate;
+
+num=314
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 1 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 1 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=4
+evaluate;
+
+num=315
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6)
+retval=$?
+expval=4
+evaluate;
+
+num=316
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 0 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 0 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=5
+evaluate;
+
+num=317
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 1 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=5
+evaluate;
+
+num=318
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=5
+evaluate;
+
+num=319
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=6
+evaluate;
+
+num=320
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 2 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!*" 6)
+retval=$?
+expval=6
+evaluate;
+
+num=321
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 3 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 3 '!' "!!|&;<>()\$\`\\\"'?[]#~=%DASTRING*" 6)
+retval=$?
+expval=6
+evaluate;
+
+num=322
+IFS= read -r cmd <<'EOF'
+ltl_substr1 0 '*' 3 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(ltl_substr1 0 '*' 3 '!' "|&;<>()\$\`\\\"'?[]#~=%DASTRING!!*" 6)
+retval=$?
+expval=6
+evaluate;
