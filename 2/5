@@ -1,0 +1,160 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+
+evaluate() {
+    if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+        printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+    elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    elif [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%s)\n" "$retstr"
+        printf "expstr: (%s)\n" "$expstr"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    else
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%d)\n" "$retval"
+        printf "expval: (%d)\n" "$expval"
+        echo
+    fi
+}
+
+num=001
+IFS= read -r cmd <<'EOF'
+remchars 'a' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+AbBcCdD 0123456789 |&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(remchars 'a' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=002
+IFS= read -r cmd <<'EOF'
+remchars 'B' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+aAbcCdD 0123456789 |&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(remchars 'B' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=003
+IFS= read -r cmd <<'EOF'
+remchars 'ABCD' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+abcd 0123456789 |&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(remchars 'ABCD' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=004
+IFS= read -r cmd <<'EOF'
+remchars 'BbAdc' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+aCD 0123456789 |&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(remchars 'BbAdc' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=005
+IFS= read -r cmd <<'EOF'
+remchars '1' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+aAbBcCdD 023456789 |&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(remchars '1' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=006
+IFS= read -r cmd <<'EOF'
+remchars '0195' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+aAbBcCdD 234678 |&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(remchars '0195' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=007
+IFS= read -r cmd <<'EOF'
+remchars '|&;<>()$`\"'\''*?[]#~=%' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+aAbBcCdD 0123456789 
+EOF
+retstr=$(remchars '|&;<>()$`\"'\''*?[]#~=%' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=008
+IFS= read -r cmd <<'EOF'
+remchars ' ' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+aAbBcCdD0123456789|&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(remchars ' ' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=009
+IFS= read -r cmd <<'EOF'
+remchars ' aB1' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+AbcCdD023456789|&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(remchars ' aB1' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=010
+IFS= read -r cmd <<'EOF'
+remchars 'ABCDabcd 9876543210 |&;<>()$`\"'\''*?[]#~=%' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remchars 'ABCDabcd 9876543210 |&;<>()$`\"'\''*?[]#~=%' 'aAbBcCdD 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
