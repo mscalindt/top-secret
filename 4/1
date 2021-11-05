@@ -1,0 +1,36 @@
+#!/bin/sh
+# ret = return
+# exp = expansion
+# var = variable
+# char = character
+# EMP = empty
+# UNS = unspecified
+# WRO = wrong
+
+# LTL0 RULES ON RET:
+EMP (1) IF (($1 = 0) && ($2 PRESENT ONLY ONCE AND IS FIRST CHAR OF $3)) || (($1 = 1) && ($2 FIRST CHAR OF $3))
+UNS (2) IF (! $2)
+WRO (3) IF ($1 > $2)
+
+# LTL1 RULES ON RET:
+UNS (1) IF (($1 = 0) && ($2 PRESENT ONLY ONCE AND IS FIRST CHAR OF $5)) || (($1 = 1) && ($2 FIRST CHAR OF $5))
+UNS (2) IF (! $2)
+WRO (3) IF ($1 > $2)
+# result of above exp is now stored in var 'i'
+EMP (4) IF (($3 = 0) && ($4 PRESENT ONLY ONCE AND IS LAST CHAR OF $i)) || (($3 = 1) && ($4 LAST CHAR OF $i))
+UNS (5) IF (! $4)
+WRO (6) IF ($3 > $4)
+
+# LTR0 RULES ON RET:
+EMP (1) IF (($1 = 0) && ($2 LAST CHAR OF $3)) || (($1 = 1) && ($2 PRESENT ONLY ONCE AND IS LAST CHAR OF $3))
+UNS (2) IF (! $2)
+WRO (3) IF ($1 > $2)
+
+# LTR1 RULES ON RET:
+UNS (1) IF (($1 = 0) && ($2 LAST CHAR OF $5)) || (($1 = 1) && ($2 PRESENT ONLY ONCE AND IS LAST CHAR OF $5))
+UNS (2) IF (! $2)
+WRO (3) IF ($1 > $2)
+# result of above exp is now stored in var 'i'
+EMP (4) IF (($3 = 0) && ($4 PRESENT ONLY ONCE AND IS FIRST CHAR OF $i)) || (($3 = 1) && ($4 FIRST CHAR OF $i))
+UNS (5) IF (! $4)
+WRO (6) IF ($3 > $4)
