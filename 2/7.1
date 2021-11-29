@@ -1,0 +1,160 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+
+evaluate() {
+    if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+        printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+    elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    elif [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%s)\n" "$retstr"
+        printf "expstr: (%s)\n" "$expstr"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    else
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%d)\n" "$retval"
+        printf "expval: (%d)\n" "$expval"
+        echo
+    fi
+}
+
+num=001
+IFS= read -r cmd <<'EOF'
+grep_str 'звездичка' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(grep_str 'звездичка' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=002
+IFS= read -r cmd <<'EOF'
+grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=003
+IFS= read -r cmd <<'EOF'
+grep_str ' ̴͋Ṙ̷' ' ̴͋Ṙ̷aAbBcCdD 0123456789 Подгяваща звездичка |&;<>()$`\"'\''*?[]#~=%' 1
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(grep_str ' ̴͋Ṙ̷' ' ̴͋Ṙ̷aAbBcCdD 0123456789 Подгяваща звездичка |&;<>()$`\"'\''*?[]#~=%' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=004
+IFS= read -r cmd <<'EOF'
+grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 Подгяваща звездичка |&;<>()$`\"'\''*?[]#~=% ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 Подгяваща звездичка |&;<>()$`\"'\''*?[]#~=% ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=005
+IFS= read -r cmd <<'EOF'
+grep_str ' ̴͋Ṙ̷' ' ̴͋Ṙ̷' 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(grep_str ' ̴͋Ṙ̷' ' ̴͋Ṙ̷' 3)
+retval=$?
+expval=0
+evaluate;
+
+num=006
+IFS= read -r cmd <<'EOF'
+grep_str 'ZA NAY K ̴͋Ṙ̷ASIVATA P ̴͋Ṙ̷INCESA KAZHETE  ̴͋Ṙ̷OZITE KADE SAAA!!!' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(grep_str 'ZA NAY K ̴͋Ṙ̷ASIVATA P ̴͋Ṙ̷INCESA KAZHETE  ̴͋Ṙ̷OZITE KADE SAAA!!!' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=1
+evaluate;
+
+num=007
+IFS= read -r cmd <<'EOF'
+grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 ПодгRяваща звездичка |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 ПодгRяваща звездичка |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=1
+evaluate;
+
+num=008
+IFS= read -r cmd <<'EOF'
+grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%' 1
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%' 1)
+retval=$?
+expval=1
+evaluate;
+
+num=009
+IFS= read -r cmd <<'EOF'
+grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%' 2
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%' 2)
+retval=$?
+expval=1
+evaluate;
+
+num=010
+IFS= read -r cmd <<'EOF'
+grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%' 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(grep_str ' ̴͋Ṙ̷' 'aAbBcCdD 0123456789 Подг ̴͋Ṙ̷яваща звездичка |&;<>()$`\"'\''*?[]#~=%' 3)
+retval=$?
+expval=1
+evaluate;
