@@ -1,0 +1,76 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+
+evaluate() {
+    if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+        printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+    elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    elif [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%s)\n" "$retstr"
+        printf "expstr: (%s)\n" "$expstr"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    else
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%d)\n" "$retval"
+        printf "expval: (%d)\n" "$expval"
+        echo
+    fi
+}
+
+num=001
+IFS= read -r cmd <<'EOF'
+get_fpath "мАлКиТеЦвЕтА ̴͋Ṙ̷ Ки|&;<>()\$\`\\\"'*?[]#~=%"
+EOF
+IFS= read -r expstr <<EOF
+$PWD/мАлКиТеЦвЕтА ̴͋Ṙ̷ Ки|&;<>()\$\`\\"'*?[]#~=%
+EOF
+retstr=$(get_fpath "мАлКиТеЦвЕтА ̴͋Ṙ̷ Ки|&;<>()\$\`\\\"'*?[]#~=%")
+retval=$?
+expval=0
+evaluate;
+
+num=002
+IFS= read -r cmd <<'EOF'
+get_fpath 'мАлКиТеЦвЕтА ̴͋Ṙ̷ Ки|&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<EOF
+$PWD/мАлКиТеЦвЕтА ̴͋Ṙ̷ Ки|&;<>()\$\`\\"'*?[]#~=%
+EOF
+retstr=$(get_fpath 'мАлКиТеЦвЕтА ̴͋Ṙ̷ Ки|&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=003
+IFS= read -r cmd <<'EOF'
+get_fpath '/мАлКиТеЦвЕтА ̴͋Ṙ̷ Ки|&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+/мАлКиТеЦвЕтА ̴͋Ṙ̷ Ки|&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(get_fpath '/мАлКиТеЦвЕтА ̴͋Ṙ̷ Ки|&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
