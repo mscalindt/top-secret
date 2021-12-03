@@ -1,0 +1,124 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+
+evaluate() {
+    if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+        printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+    elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    elif [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%s)\n" "$retstr"
+        printf "expstr: (%s)\n" "$expstr"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    else
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%d)\n" "$retval"
+        printf "expval: (%d)\n" "$expval"
+        echo
+    fi
+}
+
+num=001
+IFS= read -r cmd <<'EOF'
+str_to_chars ' ̴͋Ṙ̷КЪС АЙ KASAI ETIKETAA DAI DAI 0123456789 |&;<>()$`\"'\''*?[]#~=%'
+EOF
+IFS= read -r expstr <<'EOF'
+R K A S A I E T I K E T A A D A I D A I 0 1 2 3 4 5 6 7 8 9 | & ; < > ( ) $ ` \ " ' * ? [ ] # ~ = %
+EOF
+retstr=$(str_to_chars ' ̴͋Ṙ̷КЪС АЙ KASAI ETIKETAA DAI DAI 0123456789 |&;<>()$`\"'\''*?[]#~=%')
+retval=$?
+expval=0
+evaluate;
+
+num=002
+IFS= read -r cmd <<'EOF'
+str_to_chars '   NASHETO  MOM4E    GEROY  !  '
+EOF
+IFS= read -r expstr <<'EOF'
+N A S H E T O M O M 4 E G E R O Y !
+EOF
+retstr=$(str_to_chars '   NASHETO  MOM4E    GEROY  !  ')
+retval=$?
+expval=0
+evaluate;
+
+num=003
+IFS= read -r cmd <<'EOF'
+str_to_chars ' ̴͋Ṙ̷'
+EOF
+IFS= read -r expstr <<'EOF'
+R
+EOF
+retstr=$(str_to_chars ' ̴͋Ṙ̷')
+retval=$?
+expval=0
+evaluate;
+
+num=004
+IFS= read -r cmd <<'EOF'
+str_to_chars 'R'
+EOF
+IFS= read -r expstr <<'EOF'
+R
+EOF
+retstr=$(str_to_chars 'R')
+retval=$?
+expval=0
+evaluate;
+
+num=005
+IFS= read -r cmd <<'EOF'
+str_to_chars '   NASHETO  MOM4E    GEROY  !!!  ' 0
+EOF
+IFS= read -r expstr <<'EOF'
+N A S H E T O M 4 G R Y !
+EOF
+retstr=$(str_to_chars '   NASHETO  MOM4E    GEROY  !!!  ' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=006
+IFS= read -r cmd <<'EOF'
+str_to_chars 'КАТО ЧУЯ ИМЕТО ТИИИ МИ СЕ ДОПИВА'
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(str_to_chars 'КАТО ЧУЯ ИМЕТО ТИИИ МИ СЕ ДОПИВА')
+retval=$?
+expval=1
+evaluate;
+
+num=007
+IFS= read -r cmd <<'EOF'
+str_to_chars ''
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(str_to_chars '')
+retval=$?
+expval=1
+evaluate;
