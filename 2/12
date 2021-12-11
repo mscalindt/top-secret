@@ -1,0 +1,5177 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+
+evaluate() {
+    if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+        printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+    elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    elif [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%s)\n" "$retstr"
+        printf "expstr: (%s)\n" "$expstr"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    else
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%d)\n" "$retval"
+        printf "expval: (%d)\n" "$expval"
+        echo
+    fi
+}
+
+setup() {
+    n='.9fjxhrv48u9z8nf34yhvch3bbty3412m8z2r8tzxfzveryrandomstringofmebashingmyheadinkeyboard'
+    ( set -f
+    mkdir "$HOME/$n" \
+            "$HOME/$n/0" "$HOME/$n/1" "$HOME/$n/2" "$HOME/$n/3" "$HOME/$n/4" \
+            "$HOME/$n/5" "$HOME/$n/6" "$HOME/$n/7" "$HOME/$n/8" "$HOME/$n/9" \
+            "$HOME/$n/10" "$HOME/$n/11" "$HOME/$n/12" "$HOME/$n/13" \
+            "$HOME/$n/14" "$HOME/$n/15" "$HOME/$n/16" "$HOME/$n/17" \
+            "$HOME/$n/18" "$HOME/$n/19" "$HOME/$n/20" "$HOME/$n/21" \
+            "$HOME/$n/22" "$HOME/$n/23" "$HOME/$n/24" "$HOME/$n/25" \
+            "$HOME/$n/26" "$HOME/$n/27" "$HOME/$n/28" "$HOME/$n/29" \
+              "$HOME/$n/4/0" \
+              "$HOME/$n/5/1" \
+              "$HOME/$n/6/0" "$HOME/$n/6/1" \
+              "$HOME/$n/7/*" \
+              \
+              "$HOME/$n/8/0" \
+              "$HOME/$n/9/1" \
+              "$HOME/$n/10/0" "$HOME/$n/10/1" \
+              "$HOME/$n/11/2" "$HOME/$n/11/3" \
+              "$HOME/$n/12/*" \
+              "$HOME/$n/13/0" \
+              \
+              "$HOME/$n/14/*" \
+              "$HOME/$n/15/*.doc" "$HOME/$n/15/NA CACAO, NA MACAO -- VSE TAYA!(tsyalo lyato).doc" "$HOME/$n/15/.doc" "$HOME/$n/15/.doc.doc" "$HOME/$n/15/.doc.doc.doc" "$HOME/$n/15/.doc.doc*" \
+              "$HOME/$n/16/*" "$HOME/$n/16/.doc" "$HOME/$n/16/.doc.doc" "$HOME/$n/16/.doc.doc.doc" "$HOME/$n/16/.doc.doc*" \
+              "$HOME/$n/17/*.doc" "$HOME/$n/17/KAZHI MI CHE I TI NE HARCHISH(ti ne harchish).doc" \
+              "$HOME/$n/19/.doc" "$HOME/$n/19/.hiddendirguyzhehe.doc" "$HOME/$n/19/.hiddendir2guyzhehe.doc" "$HOME/$n/19/normaldirguyzhehe.doc" "$HOME/$n/19/normaldir2guyzhehe.doc" \
+              "$HOME/$n/20/...." "$HOME/$n/20/...f" "$HOME/$n/20/f..." "$HOME/$n/20/...f..." \
+              "$HOME/$n/21/..." "$HOME/$n/21/.f" "$HOME/$n/21/f." "$HOME/$n/21/.f." "$HOME/$n/21/..f" "$HOME/$n/21/f.." "$HOME/$n/21/..f.." \
+              "$HOME/$n/23/.a." \
+              "$HOME/$n/24/.a." \
+              "$HOME/$n/25/.b." \
+              "$HOME/$n/27/a." \
+              "$HOME/$n/28/b." \
+              "$HOME/$n/29/a."
+    touch "$HOME/$n/*" \
+              "$HOME/$n/0/0" \
+              "$HOME/$n/1/1" \
+              "$HOME/$n/2/0" "$HOME/$n/2/1" \
+              "$HOME/$n/3/*" \
+              \
+              "$HOME/$n/8/1" \
+              "$HOME/$n/9/0" \
+              "$HOME/$n/10/2" "$HOME/$n/10/3" \
+              "$HOME/$n/11/0" "$HOME/$n/11/1" \
+              "$HOME/$n/12/0" \
+              "$HOME/$n/13/*" \
+              \
+              "$HOME/$n/14/*.doc" "$HOME/$n/14/NA CACAO, NA MACAO -- VSE TAYA!(tsyalo lyato).doc" "$HOME/$n/14/.doc" "$HOME/$n/14/.doc.doc" "$HOME/$n/14/.doc.doc.doc" "$HOME/$n/14/.doc.doc*" \
+              "$HOME/$n/15/*" \
+              "$HOME/$n/16/*.doc" "$HOME/$n/16/KAZHI MI CHE I TI NE HARCHISH(ti ne harchish).doc" \
+              "$HOME/$n/17/*" "$HOME/$n/17/.doc" "$HOME/$n/17/.doc.doc" "$HOME/$n/17/.doc.doc.doc" "$HOME/$n/17/.doc.doc*" \
+              "$HOME/$n/19/*" "$HOME/$n/19/.doc.doc" "$HOME/$n/19/.doc.doc.doc" "$HOME/$n/19/.hiddenfileguyzhehe.doc" "$HOME/$n/19/.hiddenfile2guyzhehe.doc" "$HOME/$n/19/normalfileguyzhehe.doc" "$HOME/$n/19/normalfile2guyzhehe.doc" \
+              "$HOME/$n/20/..." "$HOME/$n/20/.f" "$HOME/$n/20/f." "$HOME/$n/20/.f." "$HOME/$n/20/..f" "$HOME/$n/20/f.." "$HOME/$n/20/..f.." \
+              "$HOME/$n/21/...." "$HOME/$n/21/...f" "$HOME/$n/21/f..." "$HOME/$n/21/...f..." \
+              "$HOME/$n/22/.a." \
+              "$HOME/$n/24/.b." \
+              "$HOME/$n/25/.a." \
+              "$HOME/$n/26/a." \
+              "$HOME/$n/28/a." \
+              "$HOME/$n/29/b."
+    )
+}
+
+close() {
+    rm -rf "$HOME/$n"
+}
+
+setup;
+
+num=001
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n"
+EOF
+IFS= read -r expstr <<'EOF'
+31
+EOF
+retstr=$(fcount "$HOME/$n")
+retval=$?
+expval=0
+evaluate;
+
+num=002
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0"
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/0")
+retval=$?
+expval=0
+evaluate;
+
+num=003
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1"
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/1")
+retval=$?
+expval=0
+evaluate;
+
+num=004
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/2")
+retval=$?
+expval=0
+evaluate;
+
+num=005
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3"
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/3")
+retval=$?
+expval=0
+evaluate;
+
+num=006
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4"
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/4")
+retval=$?
+expval=0
+evaluate;
+
+num=007
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5"
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/5")
+retval=$?
+expval=0
+evaluate;
+
+num=008
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/6")
+retval=$?
+expval=0
+evaluate;
+
+num=009
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7"
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/7")
+retval=$?
+expval=0
+evaluate;
+
+num=010
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/8")
+retval=$?
+expval=0
+evaluate;
+
+num=011
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/9")
+retval=$?
+expval=0
+evaluate;
+
+num=012
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10"
+EOF
+IFS= read -r expstr <<'EOF'
+4
+EOF
+retstr=$(fcount "$HOME/$n/10")
+retval=$?
+expval=0
+evaluate;
+
+num=013
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11"
+EOF
+IFS= read -r expstr <<'EOF'
+4
+EOF
+retstr=$(fcount "$HOME/$n/11")
+retval=$?
+expval=0
+evaluate;
+
+num=014
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/12")
+retval=$?
+expval=0
+evaluate;
+
+num=015
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/13")
+retval=$?
+expval=0
+evaluate;
+
+num=016
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14"
+EOF
+IFS= read -r expstr <<'EOF'
+7
+EOF
+retstr=$(fcount "$HOME/$n/14")
+retval=$?
+expval=0
+evaluate;
+
+num=017
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15"
+EOF
+IFS= read -r expstr <<'EOF'
+7
+EOF
+retstr=$(fcount "$HOME/$n/15")
+retval=$?
+expval=0
+evaluate;
+
+num=018
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16"
+EOF
+IFS= read -r expstr <<'EOF'
+7
+EOF
+retstr=$(fcount "$HOME/$n/16")
+retval=$?
+expval=0
+evaluate;
+
+num=019
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17"
+EOF
+IFS= read -r expstr <<'EOF'
+7
+EOF
+retstr=$(fcount "$HOME/$n/17")
+retval=$?
+expval=0
+evaluate;
+
+num=020
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18")
+retval=$?
+expval=0
+evaluate;
+
+num=021
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19"
+EOF
+IFS= read -r expstr <<'EOF'
+12
+EOF
+retstr=$(fcount "$HOME/$n/19")
+retval=$?
+expval=0
+evaluate;
+
+num=022
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20"
+EOF
+IFS= read -r expstr <<'EOF'
+11
+EOF
+retstr=$(fcount "$HOME/$n/20")
+retval=$?
+expval=0
+evaluate;
+
+num=023
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21"
+EOF
+IFS= read -r expstr <<'EOF'
+11
+EOF
+retstr=$(fcount "$HOME/$n/21")
+retval=$?
+expval=0
+evaluate;
+
+num=024
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22"
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/22")
+retval=$?
+expval=0
+evaluate;
+
+num=025
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23"
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/23")
+retval=$?
+expval=0
+evaluate;
+
+num=026
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/24")
+retval=$?
+expval=0
+evaluate;
+
+num=027
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/25")
+retval=$?
+expval=0
+evaluate;
+
+num=028
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26"
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/26")
+retval=$?
+expval=0
+evaluate;
+
+num=029
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27"
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/27")
+retval=$?
+expval=0
+evaluate;
+
+num=030
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/28")
+retval=$?
+expval=0
+evaluate;
+
+num=031
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/29")
+retval=$?
+expval=0
+evaluate;
+
+num=032
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" 3
+EOF
+IFS= read -r expstr <<'EOF'
+31
+EOF
+retstr=$(fcount "$HOME/$n" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=033
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/0" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=034
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/1" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=035
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/2" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=036
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/3" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=037
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/4" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=038
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/5" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=039
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/6" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=040
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/7" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=041
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/8" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=042
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/9" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=043
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" 3
+EOF
+IFS= read -r expstr <<'EOF'
+4
+EOF
+retstr=$(fcount "$HOME/$n/10" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=044
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" 3
+EOF
+IFS= read -r expstr <<'EOF'
+4
+EOF
+retstr=$(fcount "$HOME/$n/11" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=045
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/12" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=046
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/13" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=047
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" 3
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/14" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=048
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" 3
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/15" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=049
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" 3
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/16" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=050
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" 3
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/17" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=051
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=052
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" 3
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/19" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=053
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" 3
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/20" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=054
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" 3
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/21" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=055
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/22" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=056
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/23" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=057
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/24" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=058
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/25" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=059
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/26" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=060
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/27" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=061
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/28" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=062
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/29" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=063
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=064
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/0" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=065
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/1" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=066
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/2" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=067
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/3" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=068
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/4" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=069
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/5" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=070
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/6" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=071
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/7" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=072
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/8" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=073
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/9" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=074
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/10" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=075
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/11" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=076
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/12" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=077
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/13" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=078
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/14" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=079
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/15" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=080
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/16" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=081
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/17" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=082
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=083
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+11
+EOF
+retstr=$(fcount "$HOME/$n/19" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=084
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=085
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "0.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "0.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=086
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "0."
+EOF
+IFS= read -r expstr <<'EOF'
+8
+EOF
+retstr=$(fcount "$HOME/$n/20" "0.")
+retval=$?
+expval=0
+evaluate;
+
+num=087
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "0.."
+EOF
+IFS= read -r expstr <<'EOF'
+6
+EOF
+retstr=$(fcount "$HOME/$n/20" "0..")
+retval=$?
+expval=0
+evaluate;
+
+num=088
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "0..."
+EOF
+IFS= read -r expstr <<'EOF'
+4
+EOF
+retstr=$(fcount "$HOME/$n/20" "0...")
+retval=$?
+expval=0
+evaluate;
+
+num=089
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "0...."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/20" "0....")
+retval=$?
+expval=0
+evaluate;
+
+num=090
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "0."
+EOF
+IFS= read -r expstr <<'EOF'
+8
+EOF
+retstr=$(fcount "$HOME/$n/21" "0.")
+retval=$?
+expval=0
+evaluate;
+
+num=091
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "0.."
+EOF
+IFS= read -r expstr <<'EOF'
+6
+EOF
+retstr=$(fcount "$HOME/$n/21" "0..")
+retval=$?
+expval=0
+evaluate;
+
+num=092
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "0..."
+EOF
+IFS= read -r expstr <<'EOF'
+4
+EOF
+retstr=$(fcount "$HOME/$n/21" "0...")
+retval=$?
+expval=0
+evaluate;
+
+num=093
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "0...."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/21" "0....")
+retval=$?
+expval=0
+evaluate;
+
+num=094
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" "0."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/22" "0.")
+retval=$?
+expval=0
+evaluate;
+
+num=095
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" "0."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/23" "0.")
+retval=$?
+expval=0
+evaluate;
+
+num=096
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" "0."
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/24" "0.")
+retval=$?
+expval=0
+evaluate;
+
+num=097
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" "0."
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/25" "0.")
+retval=$?
+expval=0
+evaluate;
+
+num=098
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" "0."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/26" "0.")
+retval=$?
+expval=0
+evaluate;
+
+num=099
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" "0."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/27" "0.")
+retval=$?
+expval=0
+evaluate;
+
+num=100
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" "0."
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/28" "0.")
+retval=$?
+expval=0
+evaluate;
+
+num=101
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" "0."
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/29" "0.")
+retval=$?
+expval=0
+evaluate;
+
+num=102
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=103
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/0" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=104
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/1" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=105
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" 1
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/2" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=106
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/3" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=107
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" 1
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/4" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=108
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" 1
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/5" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=109
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" 1
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/6" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=110
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" 1
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/7" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=111
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/8" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=112
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/9" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=113
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" 1
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/10" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=114
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" 1
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/11" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=115
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/12" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=116
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/13" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=117
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" 1
+EOF
+IFS= read -r expstr <<'EOF'
+6
+EOF
+retstr=$(fcount "$HOME/$n/14" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=118
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/15" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=119
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" 1
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/16" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=120
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" 1
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/17" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=121
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" 1
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=122
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" 1
+EOF
+IFS= read -r expstr <<'EOF'
+7
+EOF
+retstr=$(fcount "$HOME/$n/19" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=123
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" 1
+EOF
+IFS= read -r expstr <<'EOF'
+7
+EOF
+retstr=$(fcount "$HOME/$n/20" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=124
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" 1
+EOF
+IFS= read -r expstr <<'EOF'
+4
+EOF
+retstr=$(fcount "$HOME/$n/21" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=125
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/22" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=126
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" 1
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/23" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=127
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/24" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=128
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/25" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=129
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/26" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=130
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" 1
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/27" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=131
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/28" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=132
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" 1
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/29" 1)
+retval=$?
+expval=0
+evaluate;
+
+num=133
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=134
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/0" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=135
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/1" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=136
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/2" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=137
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/3" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=138
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/4" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=139
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/5" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=140
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/6" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=141
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/7" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=142
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/8" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=143
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/9" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=144
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/10" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=145
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/11" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=146
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/12" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=147
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/13" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=148
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/14" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=149
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/15" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=150
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/16" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=151
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/17" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=152
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=153
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+6
+EOF
+retstr=$(fcount "$HOME/$n/19" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=154
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=155
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "1.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "1.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=156
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "1."
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/20" "1.")
+retval=$?
+expval=0
+evaluate;
+
+num=157
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "1.."
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/20" "1..")
+retval=$?
+expval=0
+evaluate;
+
+num=158
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "1..."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/20" "1...")
+retval=$?
+expval=0
+evaluate;
+
+num=159
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "1...."
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "1....")
+retval=$?
+expval=0
+evaluate;
+
+num=160
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "1."
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/21" "1.")
+retval=$?
+expval=0
+evaluate;
+
+num=161
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "1.."
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/21" "1..")
+retval=$?
+expval=0
+evaluate;
+
+num=162
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "1..."
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/21" "1...")
+retval=$?
+expval=0
+evaluate;
+
+num=163
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "1...."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/21" "1....")
+retval=$?
+expval=0
+evaluate;
+
+num=164
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" "1."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/22" "1.")
+retval=$?
+expval=0
+evaluate;
+
+num=165
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" "1."
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/23" "1.")
+retval=$?
+expval=0
+evaluate;
+
+num=166
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" "1."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/24" "1.")
+retval=$?
+expval=0
+evaluate;
+
+num=167
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" "1."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/25" "1.")
+retval=$?
+expval=0
+evaluate;
+
+num=168
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" "1."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/26" "1.")
+retval=$?
+expval=0
+evaluate;
+
+num=169
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" "1."
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/27" "1.")
+retval=$?
+expval=0
+evaluate;
+
+num=170
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" "1."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/28" "1.")
+retval=$?
+expval=0
+evaluate;
+
+num=171
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" "1."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/29" "1.")
+retval=$?
+expval=0
+evaluate;
+
+num=172
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" 2
+EOF
+IFS= read -r expstr <<'EOF'
+30
+EOF
+retstr=$(fcount "$HOME/$n" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=173
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" 2
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/0" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=174
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" 2
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/1" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=175
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" 2
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/2" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=176
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" 2
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/3" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=177
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/4" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=178
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/5" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=179
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" 2
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/6" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=180
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/7" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=181
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/8" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=182
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/9" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=183
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" 2
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/10" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=184
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" 2
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/11" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=185
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/12" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=186
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/13" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=187
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/14" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=188
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" 2
+EOF
+IFS= read -r expstr <<'EOF'
+6
+EOF
+retstr=$(fcount "$HOME/$n/15" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=189
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" 2
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/16" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=190
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" 2
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/17" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=191
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" 2
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=192
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" 2
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/19" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=193
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" 2
+EOF
+IFS= read -r expstr <<'EOF'
+4
+EOF
+retstr=$(fcount "$HOME/$n/20" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=194
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" 2
+EOF
+IFS= read -r expstr <<'EOF'
+7
+EOF
+retstr=$(fcount "$HOME/$n/21" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=195
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" 2
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/22" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=196
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/23" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=197
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/24" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=198
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/25" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=199
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" 2
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/26" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=200
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/27" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=201
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/28" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=202
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" 2
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/29" 2)
+retval=$?
+expval=0
+evaluate;
+
+num=203
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=204
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/0" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=205
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/1" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=206
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/2" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=207
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/3" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=208
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/4" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=209
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/5" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=210
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/6" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=211
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/7" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=212
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/8" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=213
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/9" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=214
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/10" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=215
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/11" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=216
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/12" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=217
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/13" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=218
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/14" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=219
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/15" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=220
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/16" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=221
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/17" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=222
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=223
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/19" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=224
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=225
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "2.doc"
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "2.doc")
+retval=$?
+expval=0
+evaluate;
+
+num=226
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "2."
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/20" "2.")
+retval=$?
+expval=0
+evaluate;
+
+num=227
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "2.."
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/20" "2..")
+retval=$?
+expval=0
+evaluate;
+
+num=228
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "2..."
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/20" "2...")
+retval=$?
+expval=0
+evaluate;
+
+num=229
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "2...."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/20" "2....")
+retval=$?
+expval=0
+evaluate;
+
+num=230
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "2."
+EOF
+IFS= read -r expstr <<'EOF'
+5
+EOF
+retstr=$(fcount "$HOME/$n/21" "2.")
+retval=$?
+expval=0
+evaluate;
+
+num=231
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "2.."
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/21" "2..")
+retval=$?
+expval=0
+evaluate;
+
+num=232
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "2..."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/21" "2...")
+retval=$?
+expval=0
+evaluate;
+
+num=233
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "2...."
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "2....")
+retval=$?
+expval=0
+evaluate;
+
+num=234
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" "2."
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/22" "2.")
+retval=$?
+expval=0
+evaluate;
+
+num=235
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" "2."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/23" "2.")
+retval=$?
+expval=0
+evaluate;
+
+num=236
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" "2."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/24" "2.")
+retval=$?
+expval=0
+evaluate;
+
+num=237
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" "2."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/25" "2.")
+retval=$?
+expval=0
+evaluate;
+
+num=238
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" "2."
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/26" "2.")
+retval=$?
+expval=0
+evaluate;
+
+num=239
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" "2."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/27" "2.")
+retval=$?
+expval=0
+evaluate;
+
+num=240
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" "2."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/28" "2.")
+retval=$?
+expval=0
+evaluate;
+
+num=241
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" "2."
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/29" "2.")
+retval=$?
+expval=0
+evaluate;
+
+num=242
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=243
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/0" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=244
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/1" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=245
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/2" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=246
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/3" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=247
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/4" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=248
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/5" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=249
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/6" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=250
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/7" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=251
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/8" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=252
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/9" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=253
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/10" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=254
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/11" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=255
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/12" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=256
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/13" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=257
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/14" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=258
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/15" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=259
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/16" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=260
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/17" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=261
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=262
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+4
+EOF
+retstr=$(fcount "$HOME/$n/19" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=263
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=264
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "0.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "0.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=265
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "0." 3
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/20" "0." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=266
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "0.." 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/20" "0.." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=267
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "0..." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/20" "0..." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=268
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "0...." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "0...." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=269
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "0." 3
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/21" "0." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=270
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "0.." 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/21" "0.." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=271
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "0..." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/21" "0..." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=272
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "0...." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "0...." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=273
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" "0." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/22" "0." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=274
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" "0." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/23" "0." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=275
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" "0." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/24" "0." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=276
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" "0." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/25" "0." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=277
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" "0." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/26" "0." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=278
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" "0." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/27" "0." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=279
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" "0." 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/28" "0." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=280
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" "0." 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/29" "0." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=281
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=282
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/0" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=283
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/1" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=284
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/2" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=285
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/3" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=286
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/4" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=287
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/5" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=288
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/6" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=289
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/7" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=290
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/8" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=291
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/9" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=292
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/10" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=293
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/11" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=294
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/12" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=295
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/13" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=296
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/14" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=297
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/15" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=298
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/16" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=299
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/17" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=300
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=301
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+3
+EOF
+retstr=$(fcount "$HOME/$n/19" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=302
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/20" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=303
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/21" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=304
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/22" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=305
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/23" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=306
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/24" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=307
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/25" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=308
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/26" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=309
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/27" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=310
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/28" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=311
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/29" 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=312
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=313
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/0" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=314
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/1" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=315
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/2" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=316
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/3" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=317
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/4" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=318
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/5" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=319
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/6" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=320
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/7" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=321
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/8" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=322
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/9" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=323
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/10" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=324
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/11" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=325
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/12" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=326
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/13" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=327
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/14" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=328
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/15" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=329
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/16" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=330
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/17" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=331
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=332
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/19" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=333
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=334
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "1.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "1.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=335
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "1." 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/20" "1." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=336
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "1.." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/20" "1.." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=337
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "1..." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "1..." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=338
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "1...." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "1...." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=339
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "1." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/21" "1." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=340
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "1.." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/21" "1.." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=341
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "1..." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/21" "1..." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=342
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "1...." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "1...." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=343
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" "1." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/22" "1." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=344
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" "1." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/23" "1." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=345
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" "1." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/24" "1." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=346
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" "1." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/25" "1." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=347
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" "1." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/26" "1." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=348
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" "1." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/27" "1." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=349
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" "1." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/28" "1." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=350
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" "1." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/29" "1." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=351
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+30
+EOF
+retstr=$(fcount "$HOME/$n" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=352
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/0" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=353
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/1" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=354
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/2" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=355
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/3" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=356
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/4" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=357
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/5" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=358
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/6" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=359
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/7" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=360
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/8" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=361
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/9" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=362
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/10" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=363
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/11" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=364
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/12" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=365
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/13" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=366
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/14" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=367
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/15" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=368
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/16" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=369
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/17" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=370
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=371
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/19" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=372
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/20" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=373
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/21" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=374
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/22" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=375
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/23" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=376
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/24" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=377
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/25" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=378
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/26" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=379
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/27" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=380
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/28" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=381
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/29" 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=382
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=383
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/0" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/0" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=384
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/1" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/1" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=385
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/2" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/2" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=386
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/3" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/3" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=387
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/4" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/4" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=388
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/5" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/5" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=389
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/6" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/6" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=390
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/7" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/7" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=391
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/8" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/8" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=392
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/9" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/9" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=393
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/10" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/10" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=394
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/11" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/11" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=395
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/12" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/12" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=396
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/13" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/13" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=397
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/14" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/14" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=398
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/15" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/15" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=399
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/16" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/16" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=400
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/17" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/17" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=401
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/18" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/18" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=402
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/19" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/19" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=403
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=404
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "2.doc" 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "2.doc" 3)
+retval=$?
+expval=0
+evaluate;
+
+num=405
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "2." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/20" "2." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=406
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "2.." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/20" "2.." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=407
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "2..." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/20" "2..." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=408
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/20" "2...." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/20" "2...." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=409
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "2." 3
+EOF
+IFS= read -r expstr <<'EOF'
+2
+EOF
+retstr=$(fcount "$HOME/$n/21" "2." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=410
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "2.." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/21" "2.." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=411
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "2..." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "2..." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=412
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/21" "2...." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/21" "2...." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=413
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/22" "2." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/22" "2." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=414
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/23" "2." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/23" "2." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=415
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/24" "2." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/24" "2." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=416
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/25" "2." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/25" "2." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=417
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/26" "2." 3
+EOF
+IFS= read -r expstr <<'EOF'
+0
+EOF
+retstr=$(fcount "$HOME/$n/26" "2." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=418
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/27" "2." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/27" "2." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=419
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/28" "2." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/28" "2." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=420
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/29" "2." 3
+EOF
+IFS= read -r expstr <<'EOF'
+1
+EOF
+retstr=$(fcount "$HOME/$n/29" "2." 3)
+retval=$?
+expval=0
+evaluate;
+
+num=421
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/*"
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(fcount "$HOME/$n/*")
+retval=$?
+expval=1
+evaluate;
+
+num=422
+IFS= read -r cmd <<'EOF'
+fcount "$HOME/$n/30"
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(fcount "$HOME/$n/*")
+retval=$?
+expval=1
+evaluate;
+
+close;
