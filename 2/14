@@ -1,0 +1,201 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+
+evaluate() {
+    if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+        printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+    elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    elif [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%s)\n" "$retstr"
+        printf "expstr: (%s)\n" "$expstr"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    else
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%d)\n" "$retval"
+        printf "expval: (%d)\n" "$expval"
+        echo
+    fi
+}
+
+setup() {
+    n='.9fjxn098432fnuejo82f2o4888jodui8r2g3ferddsfzveryrandomstringofmebashingmyheadinkeyboard'
+    ( set -f
+    mkdir "$HOME/$n" \
+            "$HOME/$n/surprisedirlol"
+    touch "$HOME/$n/1" "$HOME/$n/2" "$HOME/$n/3" "$HOME/$n/4"
+    printf "%s\n" \
+        'NA LEKCIY SAM AMA SAMO VIRTUALNO :))))))))))))))))) 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%' \
+            >> "$HOME/$n/1"
+    printf "%s" \
+        'NA RABOTA SAM DRUGI RABOTI SI MISLYA :))))))))))))) 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%' \
+            >> "$HOME/$n/2"
+    {
+        printf "%s\n%s\n%s\n\n" \
+        '0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%' \
+        "I SA K'VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO?" \
+        "NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO."
+
+        printf "%s\n%s\n%s\n%s\n\n" \
+        ' AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!! ' \
+        '  AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!  ' \
+        '   MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!   ' \
+        'SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !!'
+
+        printf "%s\n\n" \
+        '(PODGRYAVASHTI ZVEZDICHKI)'
+
+        printf "%s\n\n" \
+        'This is a call for help, guys. Please help me -- @mscalindt everywhere.'
+    } >> "$HOME/$n/3"
+    )
+}
+
+close() {
+    rm -rf "$HOME/$n"
+}
+
+setup;
+
+num=001
+IFS= read -r cmd <<'EOF'
+pline 1 "$HOME/$n/1"
+EOF
+IFS= read -r expstr <<'EOF'
+NA LEKCIY SAM AMA SAMO VIRTUALNO :))))))))))))))))) 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(pline 1 "$HOME/$n/1")
+retval=$?
+expval=0
+evaluate;
+
+num=002
+IFS= read -r cmd <<'EOF'
+pline 2 "$HOME/$n/1"
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(pline 2 "$HOME/$n/1")
+retval=$?
+expval=0
+evaluate;
+
+num=003
+IFS= read -r cmd <<'EOF'
+pline 1 "$HOME/$n/2"
+EOF
+IFS= read -r expstr <<'EOF'
+NA RABOTA SAM DRUGI RABOTI SI MISLYA :))))))))))))) 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'*?[]#~=%
+EOF
+retstr=$(pline 1 "$HOME/$n/2")
+retval=$?
+expval=0
+evaluate;
+
+num=004
+IFS= read -r cmd <<'EOF'
+pline 2 "$HOME/$n/3"
+EOF
+IFS= read -r expstr <<'EOF'
+I SA K'VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO?
+EOF
+retstr=$(pline 2 "$HOME/$n/3")
+retval=$?
+expval=0
+evaluate;
+
+num=005
+IFS= read -r cmd <<'EOF'
+pline 12 "$HOME/$n/3"
+EOF
+IFS= read -r expstr <<'EOF'
+This is a call for help, guys. Please help me -- @mscalindt everywhere.
+EOF
+retstr=$(pline 12 "$HOME/$n/3")
+retval=$?
+expval=0
+evaluate;
+
+num=006
+IFS= read -r cmd <<'EOF'
+pline 3 "$HOME/$n/1"
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(pline 3 "$HOME/$n/1")
+retval=$?
+expval=1
+evaluate;
+
+num=007
+IFS= read -r cmd <<'EOF'
+pline 2 "$HOME/$n/2"
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(pline 2 "$HOME/$n/2")
+retval=$?
+expval=1
+evaluate;
+
+num=008
+IFS= read -r cmd <<'EOF'
+pline 15 "$HOME/$n/3"
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(pline 15 "$HOME/$n/3")
+retval=$?
+expval=1
+evaluate;
+
+num=009
+IFS= read -r cmd <<'EOF'
+pline 1 "$HOME/$n/surprisedirlol"
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(pline 1 "$HOME/$n/surprisedirlol")
+retval=$?
+expval=2
+evaluate;
+
+num=010
+IFS= read -r cmd <<'EOF'
+pline 1 "$HOME/$n/thisdoesnotexist"
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(pline 1 "$HOME/$n/thisdoesnotexist")
+retval=$?
+expval=2
+evaluate;
+
+close;
