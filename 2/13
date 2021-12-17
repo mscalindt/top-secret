@@ -1,0 +1,336 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+
+evaluate() {
+    if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+        printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+    elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    elif [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%s)\n" "$retstr"
+        printf "expstr: (%s)\n" "$expstr"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    else
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%d)\n" "$retval"
+        printf "expval: (%d)\n" "$expval"
+        echo
+    fi
+}
+
+setup() {
+    n='.9fjxhr8zy8cgi4ht43uh729w99293sdfq21c32g3ferddsfzveryrandomstringofmebashingmyheadinkeyboard'
+    ( set -f
+    mkdir "$HOME/$n" \
+            "$HOME/$n/surprisedirlol"
+    touch "$HOME/$n/1" "$HOME/$n/2" "$HOME/$n/3"
+    printf "%s" \
+        'NA RABOTA SAM DRUGI RABOTI SI MISLYA :))))))))))))) 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%' \
+            >> "$HOME/$n/1"
+    {
+        printf "%s\n%s\n%s\n\n" \
+        '0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%' \
+        "I SA K'VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO?" \
+        "NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO."
+
+        printf "%s\n%s\n%s\n%s\n\n" \
+        ' AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!! ' \
+        '  AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!  ' \
+        '   MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!   ' \
+        'SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !!'
+
+        printf "%s\n\n" \
+        '(PODGRYAVASHTI ZVEZDICHKI)'
+
+        printf "%s\n\n" \
+        'This is a call for help, guys. Please help me -- @mscalindt everywhere.'
+    } >> "$HOME/$n/2"
+    )
+}
+
+close() {
+    rm -rf "$HOME/$n"
+}
+
+setup;
+
+num=001
+IFS= read -r cmd <<'EOF'
+parse 0 "$HOME/$n/1"
+EOF
+expstr='NA RABOTA SAM DRUGI RABOTI SI MISLYA :))))))))))))) 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%'
+retstr=$(parse 0 "$HOME/$n/1")
+retval=$?
+expval=0
+evaluate;
+
+num=002
+IFS= read -r cmd <<'EOF'
+parse 0 "$HOME/$n/2"
+EOF
+expstr='0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%
+I SA K'\''VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO?
+NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO.
+
+ AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!! 
+  AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!  
+   MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!   
+SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !!
+
+(PODGRYAVASHTI ZVEZDICHKI)
+
+This is a call for help, guys. Please help me -- @mscalindt everywhere.'
+retstr=$(parse 0 "$HOME/$n/2")
+retval=$?
+expval=0
+evaluate;
+
+num=003
+IFS= read -r cmd <<'EOF'
+parse 1 "$HOME/$n/1"
+EOF
+expstr=' NA RABOTA SAM DRUGI RABOTI SI MISLYA :))))))))))))) 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=% '
+retstr=$(parse 1 "$HOME/$n/1")
+retval=$?
+expval=0
+evaluate;
+
+num=004
+IFS= read -r cmd <<'EOF'
+parse 1 "$HOME/$n/2"
+EOF
+expstr=' 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=% 
+ I SA K'\''VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO? 
+ NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO. 
+  
+  AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!!  
+   AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!   
+    MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!    
+ SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !! 
+  
+ (PODGRYAVASHTI ZVEZDICHKI) 
+  
+ This is a call for help, guys. Please help me -- @mscalindt everywhere. 
+  '
+retstr=$(parse 1 "$HOME/$n/2")
+retval=$?
+expval=0
+evaluate;
+
+num=005
+IFS= read -r cmd <<'EOF'
+parse 2 "$HOME/$n/1"
+EOF
+expstr='  NA RABOTA SAM DRUGI RABOTI SI MISLYA :))))))))))))) 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%  '
+retstr=$(parse 2 "$HOME/$n/1")
+retval=$?
+expval=0
+evaluate;
+
+num=006
+IFS= read -r cmd <<'EOF'
+parse 2 "$HOME/$n/2"
+EOF
+expstr='  0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%  
+  I SA K'\''VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO?  
+  NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO.  
+    
+   AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!!   
+    AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!    
+     MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!     
+  SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !!  
+    
+  (PODGRYAVASHTI ZVEZDICHKI)  
+    
+  This is a call for help, guys. Please help me -- @mscalindt everywhere.  
+    '
+retstr=$(parse 2 "$HOME/$n/2")
+retval=$?
+expval=0
+evaluate;
+
+num=007
+IFS= read -r cmd <<'EOF'
+parse 3 "$HOME/$n/1"
+EOF
+expstr='NA RABOTA SAM DRUGI RABOTI SI MISLYA :))))))))))))) 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%'
+retstr=$(parse 3 "$HOME/$n/1")
+retval=$?
+expval=0
+evaluate;
+
+num=008
+IFS= read -r cmd <<'EOF'
+parse 3 "$HOME/$n/2"
+EOF
+expstr='0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%
+I SA K'\''VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO?
+NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO.
+ AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!! 
+  AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!  
+   MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!   
+SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !!
+(PODGRYAVASHTI ZVEZDICHKI)
+This is a call for help, guys. Please help me -- @mscalindt everywhere.'
+retstr=$(parse 3 "$HOME/$n/2")
+retval=$?
+expval=0
+evaluate;
+
+num=009
+IFS= read -r cmd <<'EOF'
+parse 4 "$HOME/$n/1"
+EOF
+expstr='NA RABOTA SAM DRUGI RABOTI SI MISLYA :))))))))))))) 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%'
+retstr=$(parse 4 "$HOME/$n/1")
+retval=$?
+expval=0
+evaluate;
+
+num=010
+IFS= read -r cmd <<'EOF'
+parse 4 "$HOME/$n/2"
+EOF
+expstr='0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%
+I SA K'\''VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO?
+NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO.
+
+AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!!
+AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!
+MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!
+SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !!
+
+(PODGRYAVASHTI ZVEZDICHKI)
+
+This is a call for help, guys. Please help me -- @mscalindt everywhere.'
+retstr=$(parse 4 "$HOME/$n/2")
+retval=$?
+expval=0
+evaluate;
+
+num=011
+IFS= read -r cmd <<'EOF'
+parse 0 "$HOME/$n/2" 510
+EOF
+expstr='0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%
+I SA K'\''VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO?
+NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO.
+
+ AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!! 
+  AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!  
+   MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!   
+SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !!
+
+(PODGRYAVASHTI ZVEZDICHKI)'
+retstr=$(parse 0 "$HOME/$n/2" 510)
+retval=$?
+expval=0
+evaluate;
+
+num=012
+IFS= read -r cmd <<'EOF'
+parse 1 "$HOME/$n/2" 510
+EOF
+expstr=' 0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=% 
+ I SA K'\''VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO? 
+ NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO. 
+  
+  AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!!  
+   AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!   
+    MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!    
+ SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !! 
+  
+ (PODGRYAVASHTI ZVEZDICHKI) '
+retstr=$(parse 1 "$HOME/$n/2" 510)
+retval=$?
+expval=0
+evaluate;
+
+num=013
+IFS= read -r cmd <<'EOF'
+parse 3 "$HOME/$n/2" 510
+EOF
+expstr='0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%
+I SA K'\''VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO?
+NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO.
+ AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!! 
+  AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!  
+   MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!   
+SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !!
+(PODGRYAVASHTI ZVEZDICHKI)'
+retstr=$(parse 3 "$HOME/$n/2" 510)
+retval=$?
+expval=0
+evaluate;
+
+num=014
+IFS= read -r cmd <<'EOF'
+parse 4 "$HOME/$n/2" 510
+EOF
+expstr='0123456789  ̴͋Ṙ̷ |&;<>()$`\"'\''*?[]#~=%
+I SA K'\''VO? P ̴͋Ṙ̷OBLEM LI E? P ̴͋Ṙ̷OBLEM LI E, AZ DA SAM NOME ̴͋Ṙ̷ EDNO?
+NE, SHEFKE! NYAMA P ̴͋Ṙ̷OBLEM. TI SI NOMER EDNO.
+
+AIDE TEDIIIIIIIIIIIIIIIIIIIIIIIII !!!!!!
+AIDE MOETO MOMICHEEEEEEEEEEEEEEEE !!!!
+MOYATA BOGINYAAAAAAAAAAAAAAAAAAAA !!
+SINEOKATA MI PRINCESA I RUSOKOSA PEPELYASHKAAAAAAAAAAAAA !!
+
+(PODGRYAVASHTI ZVEZDICHKI)'
+retstr=$(parse 4 "$HOME/$n/2" 510)
+retval=$?
+expval=0
+evaluate;
+
+num=015
+IFS= read -r cmd <<'EOF'
+parse 0 "$HOME/$n/3"
+EOF
+expstr=''
+retstr=$(parse 0 "$HOME/$n/3")
+retval=$?
+expval=0
+evaluate;
+
+num=016
+IFS= read -r cmd <<'EOF'
+parse 0 "$HOME/$n/surprisedirlol"
+EOF
+expstr=''
+retstr=$(parse 0 "$HOME/$n/surprisedirlol")
+retval=$?
+expval=1
+evaluate;
+
+num=017
+IFS= read -r cmd <<'EOF'
+parse 0 "$HOME/$n/thisdoesnotexist"
+EOF
+expstr=''
+retstr=$(parse 0 "$HOME/$n/thisdoesnotexist")
+retval=$?
+expval=1
+evaluate;
+
+close;
