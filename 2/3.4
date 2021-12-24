@@ -1,0 +1,1450 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+#
+# REMSTR:
+#  ̴͋Ṙ̷acingG ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+#  ̴͋Ṙ̷acing G ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+#   ̴͋Ṙ̷acingG ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+#   ̴͋Ṙ̷acing G ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷ ̴͋Ṙ̷acing 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷  ̴͋Ṙ̷acing 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷  ̴͋Ṙ̷acing  0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷ ̴͋Ṙ̷acing  0[0] 1[0] 2[0]
+#  ̴͋Ṙ̷acing 0[1] 1[1] 2[1]
+#   ̴͋Ṙ̷acing 0[0] 1[0] 2[0]
+#   ̴͋Ṙ̷acing  0[0] 1[0] 2[0]
+#  ̴͋Ṙ̷acing  0[0] 1[0] 2[0]
+#  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing 0[0] 1[0] 2[0]
+#   ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing  0[0] 1[0] 2[0]
+# * 0[2] 1[2] 2[2]
+#
+# REMSTR (mode '3'):
+#  ̴͋Ṙ̷acingG ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+#  ̴͋Ṙ̷acing G ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+#   ̴͋Ṙ̷acingG ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+#   ̴͋Ṙ̷acing G ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷ ̴͋Ṙ̷acing 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷  ̴͋Ṙ̷acing 0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷  ̴͋Ṙ̷acing  0[0] 1[0] 2[0]
+# G ̴͋Ṙ̷ ̴͋Ṙ̷acing  0[0] 1[0] 2[0]
+#  ̴͋Ṙ̷acing 0[1] 1[1] 2[1]
+#   ̴͋Ṙ̷acing 0[1] 1[1] 2[1]
+#   ̴͋Ṙ̷acing  0[1] 1[1] 2[1]
+#  ̴͋Ṙ̷acing  0[1] 1[1] 2[1]
+#  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing 0[0] 1[0] 2[0]
+#   ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing  0[0] 1[0] 2[0]
+# * 0[2] 1[2] 2[2]
+
+evaluate() {
+    if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+        printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+    elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    elif [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%s)\n" "$retstr"
+        printf "expstr: (%s)\n" "$expstr"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    else
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%d)\n" "$retval"
+        printf "expval: (%d)\n" "$expval"
+        echo
+    fi
+}
+
+num=001
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=002
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=003
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=004
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+  G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=005
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=006
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=007
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷  G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=008
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=009
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 0
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=010
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 0
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=011
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 0
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷  
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=012
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 0
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=013
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 0
+EOF
+IFS= read -r expstr <<'EOF'
+ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=014
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 0
+EOF
+IFS= read -r expstr <<'EOF'
+  
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=015
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 0
+EOF
+IFS= read -r expstr <<'EOF'
+ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=016
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 0
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=017
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 0
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=018
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=019
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=020
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=021
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+  G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=022
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=023
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=024
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷  G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=025
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=026
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 1
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=027
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 1
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=028
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 1
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷  
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=029
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 1
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=030
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 1
+EOF
+IFS= read -r expstr <<'EOF'
+ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=031
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 1
+EOF
+IFS= read -r expstr <<'EOF'
+  
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=032
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 1
+EOF
+IFS= read -r expstr <<'EOF'
+ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=033
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 1
+EOF
+IFS= read -r expstr <<'EOF'
+ ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=034
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 1
+EOF
+IFS= read -r expstr <<'EOF'
+  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=035
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=036
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=037
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=038
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+  G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=039
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=040
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=041
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷  G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=042
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=043
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 2
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=044
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 2
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=045
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 2
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷  
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=046
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 2
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=047
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 2
+EOF
+IFS= read -r expstr <<'EOF'
+ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=048
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 2
+EOF
+IFS= read -r expstr <<'EOF'
+  
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=049
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 2
+EOF
+IFS= read -r expstr <<'EOF'
+ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=050
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 2
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷G ̴͋Ṙ̷G ̴͋Ṙ̷ G ̴͋Ṙ̷G ̴͋Ṙ̷  G ̴͋Ṙ̷G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=051
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 2
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷G ̴͋Ṙ̷G ̴͋Ṙ̷ G ̴͋Ṙ̷G ̴͋Ṙ̷  G ̴͋Ṙ̷G ̴͋Ṙ̷ G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=052
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=053
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=054
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=055
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=056
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=057
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=058
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=059
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=060
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=061
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=062
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=063
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=064
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=065
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 0 3)
+retval=$?
+expval=0
+evaluate;
+
+num=066
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=067
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=068
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=069
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=070
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=071
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=072
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=073
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=074
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=075
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=076
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=077
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=078
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+ ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=079
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 1 3)
+retval=$?
+expval=0
+evaluate;
+
+num=080
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=081
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=082
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=083
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=084
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=085
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=086
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=087
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=088
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=089
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=090
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷  ̴͋Ṙ̷acing ' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=091
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' 'G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=092
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷G ̴͋Ṙ̷G ̴͋Ṙ̷G ̴͋Ṙ̷G ̴͋Ṙ̷ G ̴͋Ṙ̷G ̴͋Ṙ̷ G ̴͋Ṙ̷
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=093
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+G ̴͋Ṙ̷G ̴͋Ṙ̷G ̴͋Ṙ̷G ̴͋Ṙ̷G ̴͋Ṙ̷ G ̴͋Ṙ̷G ̴͋Ṙ̷ G ̴͋Ṙ̷ 
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acingG ̴͋Ṙ̷ ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acingG ̴͋Ṙ̷G ̴͋Ṙ̷  ̴͋Ṙ̷acing G ̴͋Ṙ̷G ̴͋Ṙ̷ ̴͋Ṙ̷acing G ̴͋Ṙ̷ ̴͋Ṙ̷acing ' 2 3)
+retval=$?
+expval=0
+evaluate;
+
+num=094
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 0
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 0)
+retval=$?
+expval=1
+evaluate;
+
+num=095
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 1
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 1)
+retval=$?
+expval=1
+evaluate;
+
+num=096
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 2
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 2)
+retval=$?
+expval=1
+evaluate;
+
+num=097
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 0 3)
+retval=$?
+expval=1
+evaluate;
+
+num=098
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 0 3)
+retval=$?
+expval=1
+evaluate;
+
+num=099
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 0 3)
+retval=$?
+expval=1
+evaluate;
+
+num=100
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 0 3)
+retval=$?
+expval=1
+evaluate;
+
+num=101
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 1 3)
+retval=$?
+expval=1
+evaluate;
+
+num=102
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 1 3)
+retval=$?
+expval=1
+evaluate;
+
+num=103
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 1 3)
+retval=$?
+expval=1
+evaluate;
+
+num=104
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 1 3)
+retval=$?
+expval=1
+evaluate;
+
+num=105
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing' 2 3)
+retval=$?
+expval=1
+evaluate;
+
+num=106
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing' 2 3)
+retval=$?
+expval=1
+evaluate;
+
+num=107
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '  ̴͋Ṙ̷acing ' 2 3)
+retval=$?
+expval=1
+evaluate;
+
+num=108
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' ' ̴͋Ṙ̷acing ' 2 3)
+retval=$?
+expval=1
+evaluate;
+
+num=109
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '*' 0
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '*' 0)
+retval=$?
+expval=2
+evaluate;
+
+num=110
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '*' 1
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '*' 1)
+retval=$?
+expval=2
+evaluate;
+
+num=111
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '*' 2
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '*' 2)
+retval=$?
+expval=2
+evaluate;
+
+num=112
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '*' 0 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '*' 0 3)
+retval=$?
+expval=2
+evaluate;
+
+num=113
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '*' 1 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '*' 1 3)
+retval=$?
+expval=2
+evaluate;
+
+num=114
+IFS= read -r cmd <<'EOF'
+remstr ' ̴͋Ṙ̷acing' '*' 2 3
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(remstr ' ̴͋Ṙ̷acing' '*' 2 3)
+retval=$?
+expval=2
+evaluate;
