@@ -1,0 +1,375 @@
+#!/bin/sh
+# num = test number
+# cmd = command executed
+# retstr = returned string from function
+# retval = returned value
+# expstr = expected string from function
+# expval = expected value
+#
+# REPLSTR:
+# TITATITAKAVAKRAVASI 0[0] 1[0] 2[0]
+#  TITATITAKAVAKRAVASI  0[0] 1[0] 2[0]
+# RTITATITAKAVAKRAVASI 0[0] 1[0] 2[0]
+# TITATITAKAVAKRAVASIR 0[0] 1[0] 2[0]
+# RTITATITAKAVAKRAVASIR 0[0] 1[0] 2[0]
+# R TITATITAKAVAKRAVASI R 0[0] 1[0] 2[0]
+# |&;<>()$`\"'\''*?[R]#~=% 0[0] 1[0] 2[0]
+# |&;<>()$`\"'\''*?[]#~=% 0[2] 1[2] 2[2]
+# R 0[1] 1[1] 2[1]
+
+evaluate() {
+    if [ "$retstr" = "$expstr" ] && [ $retval -eq $expval ]; then
+        printf "%bTest %s passed.%b\n" "\033[1;32m" "$num" "\033[0m"
+    elif [ "$retstr" != "$expstr" ] && [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    elif [ $retval -ne $expval ]; then
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%s)\n" "$retstr"
+        printf "expstr: (%s)\n" "$expstr"
+        printf "retval: (%b%d%b)\n" "\033[1;31m" "$retval" "\033[0m"
+        printf "expval: (%b%d%b)\n" "\033[1;32m" "$expval" "\033[0m"
+        echo
+    else
+        echo
+        printf '%b%s:%b\n' "\033[1;37m" "$num" "\033[0m"
+        printf "cmd: (%s)\n" "$cmd"
+        printf "retstr: (%b%s%b)\n" "\033[1;31m" "$retstr" "\033[0m"
+        printf "expstr: (%b%s%b)\n" "\033[1;32m" "$expstr" "\033[0m"
+        printf "retval: (%d)\n" "$retval"
+        printf "expval: (%d)\n" "$expval"
+        echo
+    fi
+}
+
+num=001
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'TITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+TITATITAKAVAK ̴͋Ṙ̷AVASI
+EOF
+retstr=$(replstr 'R' 'TITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=002
+IFS= read -r cmd <<'EOF'
+replstr 'R' ' TITATITAKAVAKRAVASI ' ' ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+ TITATITAKAVAK ̴͋Ṙ̷AVASI 
+EOF
+retstr=$(replstr 'R' ' TITATITAKAVAKRAVASI ' ' ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=003
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'RTITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+ ̴͋Ṙ̷TITATITAKAVAKRAVASI
+EOF
+retstr=$(replstr 'R' 'RTITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=004
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'TITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+TITATITAKAVAK ̴͋Ṙ̷AVASIR
+EOF
+retstr=$(replstr 'R' 'TITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=005
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'RTITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+ ̴͋Ṙ̷TITATITAKAVAKRAVASIR
+EOF
+retstr=$(replstr 'R' 'RTITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=006
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'R TITATITAKAVAKRAVASI R' ' ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+ ̴͋Ṙ̷ TITATITAKAVAKRAVASI R
+EOF
+retstr=$(replstr 'R' 'R TITATITAKAVAKRAVASI R' ' ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=007
+IFS= read -r cmd <<'EOF'
+replstr 'R' '|&;<>()$`\"'\''*?[R]#~=%' ' ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'*?[ ̴͋Ṙ̷]#~=%
+EOF
+retstr=$(replstr 'R' '|&;<>()$`\"'\''*?[R]#~=%' ' ̴͋Ṙ̷' 0)
+retval=$?
+expval=0
+evaluate;
+
+num=008
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'TITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+TITATITAKAVAK ̴͋Ṙ̷AVASI
+EOF
+retstr=$(replstr 'R' 'TITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=009
+IFS= read -r cmd <<'EOF'
+replstr 'R' ' TITATITAKAVAKRAVASI ' ' ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+ TITATITAKAVAK ̴͋Ṙ̷AVASI 
+EOF
+retstr=$(replstr 'R' ' TITATITAKAVAKRAVASI ' ' ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=010
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'RTITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+RTITATITAKAVAK ̴͋Ṙ̷AVASI
+EOF
+retstr=$(replstr 'R' 'RTITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=011
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'TITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+TITATITAKAVAKRAVASI ̴͋Ṙ̷
+EOF
+retstr=$(replstr 'R' 'TITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=012
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'RTITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+RTITATITAKAVAKRAVASI ̴͋Ṙ̷
+EOF
+retstr=$(replstr 'R' 'RTITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=013
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'R TITATITAKAVAKRAVASI R' ' ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+R TITATITAKAVAKRAVASI  ̴͋Ṙ̷
+EOF
+retstr=$(replstr 'R' 'R TITATITAKAVAKRAVASI R' ' ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=014
+IFS= read -r cmd <<'EOF'
+replstr 'R' '|&;<>()$`\"'\''*?[R]#~=%' ' ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'*?[ ̴͋Ṙ̷]#~=%
+EOF
+retstr=$(replstr 'R' '|&;<>()$`\"'\''*?[R]#~=%' ' ̴͋Ṙ̷' 1)
+retval=$?
+expval=0
+evaluate;
+
+num=015
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'TITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+TITATITAKAVAK ̴͋Ṙ̷AVASI
+EOF
+retstr=$(replstr 'R' 'TITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=016
+IFS= read -r cmd <<'EOF'
+replstr 'R' ' TITATITAKAVAKRAVASI ' ' ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+ TITATITAKAVAK ̴͋Ṙ̷AVASI 
+EOF
+retstr=$(replstr 'R' ' TITATITAKAVAKRAVASI ' ' ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=017
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'RTITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+ ̴͋Ṙ̷TITATITAKAVAK ̴͋Ṙ̷AVASI
+EOF
+retstr=$(replstr 'R' 'RTITATITAKAVAKRAVASI' ' ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=018
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'TITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+TITATITAKAVAK ̴͋Ṙ̷AVASI ̴͋Ṙ̷
+EOF
+retstr=$(replstr 'R' 'TITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=019
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'RTITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+ ̴͋Ṙ̷TITATITAKAVAK ̴͋Ṙ̷AVASI ̴͋Ṙ̷
+EOF
+retstr=$(replstr 'R' 'RTITATITAKAVAKRAVASIR' ' ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=020
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'R TITATITAKAVAKRAVASI R' ' ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+ ̴͋Ṙ̷ TITATITAKAVAK ̴͋Ṙ̷AVASI  ̴͋Ṙ̷
+EOF
+retstr=$(replstr 'R' 'R TITATITAKAVAKRAVASI R' ' ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=021
+IFS= read -r cmd <<'EOF'
+replstr 'R' '|&;<>()$`\"'\''*?[R]#~=%' ' ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+|&;<>()$`\"'*?[ ̴͋Ṙ̷]#~=%
+EOF
+retstr=$(replstr 'R' '|&;<>()$`\"'\''*?[R]#~=%' ' ̴͋Ṙ̷' 2)
+retval=$?
+expval=0
+evaluate;
+
+num=022
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'R' ' ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(replstr 'R' 'R' ' ̴͋Ṙ̷' 0)
+retval=$?
+expval=1
+evaluate;
+
+num=023
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'R' ' ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(replstr 'R' 'R' ' ̴͋Ṙ̷' 1)
+retval=$?
+expval=1
+evaluate;
+
+num=024
+IFS= read -r cmd <<'EOF'
+replstr 'R' 'R' ' ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(replstr 'R' 'R' ' ̴͋Ṙ̷' 2)
+retval=$?
+expval=1
+evaluate;
+
+num=025
+IFS= read -r cmd <<'EOF'
+replstr 'R' '|&;<>()$`\"'\''*?[]#~=%' ' ̴͋Ṙ̷' 0
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(replstr 'R' '|&;<>()$`\"'\''*?[]#~=%' ' ̴͋Ṙ̷' 0)
+retval=$?
+expval=2
+evaluate;
+
+num=026
+IFS= read -r cmd <<'EOF'
+replstr 'R' '|&;<>()$`\"'\''*?[]#~=%' ' ̴͋Ṙ̷' 1
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(replstr 'R' '|&;<>()$`\"'\''*?[]#~=%' ' ̴͋Ṙ̷' 1)
+retval=$?
+expval=2
+evaluate;
+
+num=027
+IFS= read -r cmd <<'EOF'
+replstr 'R' '|&;<>()$`\"'\''*?[]#~=%' ' ̴͋Ṙ̷' 2
+EOF
+IFS= read -r expstr <<'EOF'
+
+EOF
+retstr=$(replstr 'R' '|&;<>()$`\"'\''*?[]#~=%' ' ̴͋Ṙ̷' 2)
+retval=$?
+expval=2
+evaluate;
