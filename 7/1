@@ -1,0 +1,121 @@
+#!/bin/sh
+
+assert() {
+    case "$1" in
+        '-single-quotes-array')
+            set -- "${2%"${2##*[! ]}"}"; while [ "$1" ] || return 1; do
+                set -- "${1#"${1%%[! ]*}"}"
+
+                [ "${1#\'}" != "$1" ] && set -- "${1#\'}" || return 1
+
+                while [ "$1" ]; do
+                    case "${1#*\'}" in
+                        \\\'\'*) set -- "${1#*\'\\\'\'}"; continue ;;
+                        \ *) set -- "${1#*\'}"; continue 2 ;;
+                        '') break 2 ;;
+                    esac
+
+                    return 1
+                done
+            done
+        ;;
+    esac
+}
+
+run_tests() {
+    test_str="$1"
+    exp="$2"
+
+    assert -single-quotes-array "$test_str"
+    result=$?
+
+    if [ "$exp" -eq "$result" ]; then
+        printf "%s\n" "  |  ~$test_str~"
+    else
+        printf "%s\n" " FAILED ~$test_str~ (E/$exp, G/$result)"
+    fi
+}
+
+N=1
+
+# 1+:
+printf "%s " "0$N"; run_tests "'a'" 0; N=$((N+1))  # 1
+printf "%s " "0$N"; run_tests "'a' 'b'" 0; N=$((N+1))
+printf "%s " "0$N"; run_tests "'a b c' 'd e f'" 0; N=$((N+1))
+printf "%s " "0$N"; run_tests "'' ''" 0; N=$((N+1))
+printf "%s " "0$N"; run_tests "'a b' 'c d' 'e f'" 0; N=$((N+1))
+printf "%s " "0$N"; run_tests "'a' ' b'" 0; N=$((N+1))
+printf "%s " "0$N"; run_tests "'a' 'b '" 0; N=$((N+1))
+printf "%s " "0$N"; run_tests "'a' 'b ' 'c'" 0; N=$((N+1))
+printf "%s " "0$N"; run_tests " 'a'" 0; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' " 0; N=$((N+1))
+printf "%s " "$N"; run_tests "  'a'" 0; N=$((N+1))
+printf "%s " "$N"; run_tests "'a'  " 0; N=$((N+1))
+printf "%s " "$N"; run_tests "  'a' " 0; N=$((N+1))
+printf "%s " "$N"; run_tests " 'a'  " 0; N=$((N+1))
+printf "%s " "$N"; run_tests "  'a'  " 0; N=$((N+1))
+printf "%s " "$N"; run_tests " '' " 0; N=$((N+1))
+printf "%s " "$N"; run_tests "'a'  'b'" 0; N=$((N+1))
+printf "%s " "$N"; run_tests "  'a'  'b'  " 0; N=$((N+1))
+# 19+:
+printf "%s " "$N"; run_tests "'a' 'b" 1; N=$((N+1))  # 19
+printf "%s " "$N"; run_tests "'a' 'b' ' " 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' 'b' '" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' 'b' ' c" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' 'b' 'c" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a''b'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' 'b'c'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "a'b'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' b 'c'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a'b'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' 'b' 'c' '" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a'\'' 'b'\''" 1; N=$((N+1))
+printf "%s " "$N"; run_tests " " 1; N=$((N+1))
+printf "%s " "$N"; run_tests " '''" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'''" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "  'a'  'b' \ " 1; N=$((N+1))
+printf "%s " "$N"; run_tests "  'a'  'b' \  " 1; N=$((N+1))
+printf "%s " "$N"; run_tests "  'a'  'b' \\  " 1; N=$((N+1))
+# 37+:
+printf "%s " "$N"; run_tests "'a' 'b \\''" 1; N=$((N+1))  # 37
+printf "%s " "$N"; run_tests "'a \\''b'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a \\'' 'b'\\''" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a\\' 'b\\''" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a\\' 'b'\\''" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a\\'b\\''" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a''b'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a'b'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' 'b' 'c'd'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "  'a' 'b' 'c'  " 0; N=$((N+1))
+printf "%s " "$N"; run_tests " 'a'  'b' 'c' " 0; N=$((N+1))
+printf "%s " "$N"; run_tests " 'a' 'b'  'c' " 0; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' 'b' 'c''" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' 'b' 'c'" 0; N=$((N+1))
+printf "%s " "$N"; run_tests "  'a'  'b'  'c'  " 0; N=$((N+1))
+printf "%s " "$N"; run_tests " 'a'   'b'  'c' " 0; N=$((N+1))
+printf "%s " "$N"; run_tests " 'a'  'b' ' c' " 0; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' \"b\" 'c'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' \"b' 'c'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' \"b' 'c'\''" 1; N=$((N+1))
+# 57+:
+printf "%s " "$N"; run_tests "'single' 'quotes' 'only'" 0; N=$((N+1))  # 57
+printf "%s " "$N"; run_tests "'with' 'escaped'\'' 'quotes'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'with' 'mult' 'esc'\'' '\'' 'quot'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'single' ' ' 'space'" 0; N=$((N+1))
+printf "%s " "$N"; run_tests "'trail' 'space' 'inside ' 'quot'" 0; N=$((N+1))
+printf "%s " "$N"; run_tests "'missing' 'closing' 'quote" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'unescaped' 'single' quote'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'improper' 'escape\' sequence'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'mismatched' \"quotes\"" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "\"double\" \"quotes\"" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'nested' 'quotes' '\'' '" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'unexpected ' space'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'start' quote 'missing" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'escaped\" 'double\" quote'" 1; N=$((N+1))
+# 71+:
+printf "%s " "$N"; run_tests "''''''''" 1; N=$((N+1))  # 71
+printf "%s " "$N"; run_tests "'''''''" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' ''' 'b'" 1; N=$((N+1))
+printf "%s " "$N"; run_tests "'a' 'b c d e' 'f g h'" 0; N=$((N+1))
+printf "%s " "$N"; run_tests "'a b c' 'd' 'e f g'" 0; N=$((N+1))
+printf "%s " "$N"; run_tests "' a b c '" 0; N=$((N+1))
